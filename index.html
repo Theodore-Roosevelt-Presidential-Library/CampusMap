@@ -29,14 +29,22 @@
 
   /* controls guide, lower center */
   .guide { position:absolute; left:50%; bottom:20px; transform:translateX(-50%);
-    display:flex; gap:20px; align-items:center; padding:9px 18px;
+    display:flex; flex-wrap:wrap; justify-content:center; gap:20px; align-items:center; padding:9px 18px;
+    max-width:calc(100vw - 32px);
     background:rgba(255,255,255,.9); border:1px solid var(--line); border-radius:14px;
     box-shadow:0 1px 4px rgba(0,0,0,.08); font-size:12px; color:#54585d; user-select:none; }
   .guide .item { display:flex; align-items:center; gap:7px; white-space:nowrap; }
   .guide svg { width:18px; height:18px; stroke:#8a8f95; fill:none; stroke-width:1.6;
     stroke-linecap:round; stroke-linejoin:round; }
   .guide b { font-weight:600; color:var(--text); }
-  @media (max-width: 720px){ .guide{ display:none; } }
+  @media (max-width: 720px){
+    .guide{ gap:12px 14px; padding:7px 12px; font-size:11px; bottom:14px; }
+    .guide svg{ width:16px; height:16px; }
+    .logo img{ height:32px; }
+  }
+  @media (max-width: 430px){
+    .guide{ gap:8px 12px; font-size:10px; }
+  }
 
   /* loading */
   .loading { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center;
@@ -53,7 +61,7 @@
       src="TRPL_campus_web.glb"
       alt="3D model of the TRPL campus"
       camera-controls
-      touch-action="pan-y"
+      touch-action="none"
       interaction-prompt="none"
       shadow-intensity="0.6"
       shadow-softness="1"
@@ -85,24 +93,7 @@
     </a>
   </div>
 
-  <div class="guide">
-    <div class="item" title="Drag to orbit">
-      <svg viewBox="0 0 24 24"><path d="M20.5 12a8.5 8.5 0 1 1-2.4-5.9"/><path d="M20.5 4.5V9h-4.5"/></svg>
-      <span><b>Drag</b> rotate</span>
-    </div>
-    <div class="item" title="Scroll or use +/- to zoom">
-      <svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6"/><line x1="15" y1="15" x2="20" y2="20"/><line x1="7.8" y1="10.5" x2="13.2" y2="10.5"/><line x1="10.5" y1="7.8" x2="10.5" y2="13.2"/></svg>
-      <span><b>Scroll</b> zoom</span>
-    </div>
-    <div class="item" title="Right-drag to pan">
-      <svg viewBox="0 0 24 24"><line x1="12" y1="3" x2="12" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3l-2.3 2.6M12 3l2.3 2.6M12 21l-2.3-2.6M12 21l2.3-2.6M3 12l2.6-2.3M3 12l2.6 2.3M21 12l-2.6-2.3M21 12l-2.6 2.3"/></svg>
-      <span><b>Right-drag</b> pan</span>
-    </div>
-    <div class="item" title="Double-click a point to recenter on it">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><line x1="12" y1="1.5" x2="12" y2="5.5"/><line x1="12" y1="18.5" x2="12" y2="22.5"/><line x1="1.5" y1="12" x2="5.5" y2="12"/><line x1="18.5" y1="12" x2="22.5" y2="12"/><circle cx="12" cy="12" r="1.6" fill="#8a8f95" stroke="none"/></svg>
-      <span><b>Double-click</b> recenter</span>
-    </div>
-  </div>
+  <div class="guide" id="guide"></div>
 </div>
 
 <script>
@@ -160,11 +151,44 @@
   mv.addEventListener('pointerup', endDrag);
   mv.addEventListener('pointercancel', endDrag);
 
-  // Double-click a point on the model to recenter the orbit pivot there.
-  mv.addEventListener('dblclick', (e) => {
-    const hit = mv.positionAndNormalFromPoint(e.clientX, e.clientY);
+  // Recenter the orbit pivot on a screen point (used by double-click and double-tap).
+  function recenterAt(x, y){
+    const hit = mv.positionAndNormalFromPoint(x, y);
     if (hit && hit.position) { mv.cameraTarget = hit.position.toString(); userMoved = true; }
+  }
+  // Mouse: double-click to recenter.
+  mv.addEventListener('dblclick', (e) => recenterAt(e.clientX, e.clientY));
+  // Touch: double-tap to recenter (dblclick is unreliable on touch devices).
+  let lastTap = 0, lastXY = null;
+  mv.addEventListener('touchend', (e) => {
+    if (e.changedTouches.length !== 1) { lastTap = 0; lastXY = null; return; }
+    const t = e.changedTouches[0], now = Date.now();
+    if (now - lastTap < 320 && lastXY && Math.hypot(t.clientX - lastXY.x, t.clientY - lastXY.y) < 30) {
+      recenterAt(t.clientX, t.clientY); lastTap = 0; lastXY = null;
+    } else { lastTap = now; lastXY = { x: t.clientX, y: t.clientY }; }
   });
+
+  // Build the controls guide with device-appropriate instructions.
+  const isTouch = matchMedia('(pointer: coarse)').matches || ('ontouchstart' in window);
+  const ICON = {
+    rotate:'<svg viewBox="0 0 24 24"><path d="M20.5 12a8.5 8.5 0 1 1-2.4-5.9"/><path d="M20.5 4.5V9h-4.5"/></svg>',
+    zoom:'<svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6"/><line x1="15" y1="15" x2="20" y2="20"/><line x1="7.8" y1="10.5" x2="13.2" y2="10.5"/><line x1="10.5" y1="7.8" x2="10.5" y2="13.2"/></svg>',
+    pan:'<svg viewBox="0 0 24 24"><line x1="12" y1="3" x2="12" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3l-2.3 2.6M12 3l2.3 2.6M12 21l-2.3-2.6M12 21l2.3-2.6M3 12l2.6-2.3M3 12l2.6 2.3M21 12l-2.6-2.3M21 12l-2.6 2.3"/></svg>',
+    target:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><line x1="12" y1="1.5" x2="12" y2="5.5"/><line x1="12" y1="18.5" x2="12" y2="22.5"/><line x1="1.5" y1="12" x2="5.5" y2="12"/><line x1="18.5" y1="12" x2="22.5" y2="12"/><circle cx="12" cy="12" r="1.6" fill="#8a8f95" stroke="none"/></svg>',
+  };
+  const guideItems = isTouch ? [
+    ['rotate','One finger','rotate'],
+    ['zoom','Pinch','zoom'],
+    ['pan','Two fingers','pan'],
+    ['target','Double-tap','recenter'],
+  ] : [
+    ['rotate','Drag','rotate'],
+    ['zoom','Scroll','zoom'],
+    ['pan','Right-drag','pan'],
+    ['target','Double-click','recenter'],
+  ];
+  document.getElementById('guide').innerHTML = guideItems
+    .map(([ic,a,d]) => `<div class="item">${ICON[ic]}<span><b>${a}</b> ${d}</span></div>`).join('');
 </script>
 </body>
 </html>
