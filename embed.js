@@ -3,6 +3,9 @@
  * Usage: <script src="https://campus.labs.trlibrary.com/embed.js" data-view="..." data-height="600"></script>
  * Optional data attributes:
  *   data-view    the "v" permalink token (camera angle, zoom, open POI). Omit for the default view.
+ *   data-pois    URL of a custom POI JSON file to use instead of the default set
+ *                (must be CORS-accessible). See README for the JSON shape and the
+ *                postMessage API for injecting POIs without CORS.
  *   data-height  iframe height in px (default 600), or any CSS length (e.g. "80vh").
  *   data-width   iframe width (default 100%).
  */
@@ -11,12 +14,17 @@
   if (!s) return;
   var origin = new URL(s.src).origin;
   var view = s.getAttribute('data-view') || '';
+  var pois = s.getAttribute('data-pois') || '';
   var height = s.getAttribute('data-height') || '600';
   var width = s.getAttribute('data-width') || '100%';
   if (/^\d+$/.test(height)) height += 'px';
   if (/^\d+$/.test(width)) width += 'px';
 
-  var src = origin + '/' + (view ? '?v=' + encodeURIComponent(view) : '');
+  var params = new URLSearchParams();
+  if (view) params.set('v', view);
+  if (pois) params.set('pois', pois);
+  var qs = params.toString();
+  var src = origin + '/' + (qs ? '?' + qs : '');
   var iframe = document.createElement('iframe');
   iframe.src = src;
   iframe.title = 'Theodore Roosevelt Presidential Library — Campus 3D Map';

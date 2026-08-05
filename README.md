@@ -61,6 +61,38 @@ The viewer can be dropped into any web page. Frame the view you want, click **Em
 
 `embed.js` inserts a responsive, full-screen-capable iframe in place of the script tag. `data-view` is optional — omit it to open the default view; `data-height` and `data-width` are also optional (px or any CSS length).
 
+### Custom points of interest in an embed
+
+An embedded map can show its own POIs instead of the default set — same campus model, different markers and panels. Two ways:
+
+**Hosted JSON** — point `data-pois` at a URL returning the same shape as `pois.json` (a `{ "pois": [...] }` object, or a bare array). It must be served with CORS so the map can fetch it.
+
+```html
+<script src="https://campus.labs.trlibrary.com/embed.js"
+        data-pois="https://example.org/my-pois.json"
+        data-height="600"></script>
+```
+
+**postMessage (no CORS needed)** — inject POIs directly from the host page after the iframe loads:
+
+```html
+<script src="https://campus.labs.trlibrary.com/embed.js" data-height="600"></script>
+<script>
+  const map = document.querySelector('iframe[src*="campus.labs.trlibrary.com"]');
+  map.addEventListener('load', () => {
+    map.contentWindow.postMessage({
+      type: 'trpl:setPOIs',
+      pois: [
+        { id: 'my-stop', title: 'My Stop', description: '…',
+          position: '-30 1.4 -75', normal: '0 1 0' }
+      ]
+    }, '*');
+  });
+</script>
+```
+
+Each POI uses the same fields as the default set (`id`, `title`, `image`, `description`, `cta`, `position`, `normal`); coordinates are on the shared campus model, so use the `?edit` coordinate picker to grab new ones.
+
 ## Source preservation
 
 The original full-resolution GLTF export is kept in `source/` and tracked with **Git LFS** (`*.gltf`). It is the master the web model was derived from, and is excluded from the Pages deploy so it never bloats the live site. Working with it requires Git LFS installed locally (`git lfs install`) — GitHub Desktop bundles it.

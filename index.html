@@ -445,18 +445,28 @@
   function scheduleOcclusion(){ if (occRAF) return; occRAF = requestAnimationFrame(() => { occRAF = 0; updateOcclusion(); }); }
   mv.addEventListener('camera-change', scheduleOcclusion);
 
-  fetch('pois.json', { cache: 'no-cache' })
+  // POI source can be overridden via ?pois=<url> (e.g. from an embed's data-pois).
+  const poisSource = params.get('pois') || 'pois.json';
+  function loadPOIs(list, openInitial){
+    POIS = Array.isArray(list) ? list : (list && list.pois) || [];
+    renderPOIs(POIS);
+    if (openInitial && initial && initial.poi > 0 && POIS[initial.poi - 1]) {
+      const p = POIS[initial.poi - 1];
+      openPanel(p, mv.querySelector('[slot="hotspot-poi-' + p.id + '"]'));
+    }
+    requestAnimationFrame(() => requestAnimationFrame(updateOcclusion));
+  }
+  fetch(poisSource, { cache: 'no-cache' })
     .then(r => r.ok ? r.json() : Promise.reject())
-    .then(d => {
-      POIS = d.pois || [];
-      renderPOIs(POIS);
-      if (initial && initial.poi > 0 && POIS[initial.poi - 1]) {
-        const p = POIS[initial.poi - 1];
-        openPanel(p, mv.querySelector('[slot="hotspot-poi-' + p.id + '"]'));
-      }
-      requestAnimationFrame(() => requestAnimationFrame(updateOcclusion));
-    })
-    .catch(() => { /* no pois.json yet — viewer still works */ });
+    .then(d => loadPOIs(d, true))
+    .catch(() => { /* no POI source reachable — viewer still works */ });
+
+  // Host pages can inject/replace POIs directly (no CORS needed):
+  //   iframe.contentWindow.postMessage({ type: 'trpl:setPOIs', pois: [...] }, '*')
+  window.addEventListener('message', (e) => {
+    const d = e.data;
+    if (d && d.type === 'trpl:setPOIs' && Array.isArray(d.pois)) { closePanel(); loadPOIs(d.pois, false); }
+  });
 
   // ---------- Coordinate picker (authoring tool: add ?edit to the URL) ----------
   const picker = document.getElementById('picker');
