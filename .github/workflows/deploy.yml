@@ -23,13 +23,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        # LFS files stay as pointers (not pulled) — the source model is
-        # preserved in the repo but not needed to build the site.
       - name: Assemble site (exclude source/ and repo meta)
         run: |
           mkdir -p _site
           cp index.html _site/
           cp pois.json _site/
+          cp heightfield.json _site/
           cp TRPL_campus_web.glb _site/
           cp CNAME _site/
           cp -r img _site/

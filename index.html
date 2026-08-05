@@ -29,7 +29,8 @@
   * { box-sizing:border-box; }
   html,body { margin:0; height:100%; background:#ffffff; color:var(--text); font-family:var(--font-ui); }
   .stage { position:relative; width:100%; height:100%; }
-  model-viewer { width:100%; height:100%; background:#ffffff; --poster-color:#ffffff; cursor:crosshair; }
+  model-viewer { width:100%; height:100%; background:#ffffff; --poster-color:#ffffff; cursor:crosshair;
+    --min-hotspot-opacity:1; }   /* disable model-viewer's facing dim; occlusion handled by heightfield */
   model-viewer.dragging { cursor:grabbing; }
 
   /* zoom controls, lower right */
@@ -79,6 +80,7 @@
     background:#2a2d31; color:#fff; font-size:11px; white-space:nowrap; padding:3px 8px;
     border-radius:6px; opacity:0; pointer-events:none; transition:opacity .12s; }
   .poi:hover .lbl { opacity:1; }
+  .poi.occluded { opacity:0; pointer-events:none; }   /* hidden when a building/berm blocks the view */
 
   /* info panel, slides in from the right */
   .panel { position:absolute; top:0; right:0; height:100%; width:360px; max-width:86vw; z-index:5;
@@ -370,6 +372,40 @@
     if (hidden) closePanel();
   };
 
+  // Fast occlusion via a precomputed terrain/building height map (ray-march, no GPU raycasting).
+  let HF = null;
+  fetch('heightfield.json', { cache: 'force-cache' })
+    .then(r => r.ok ? r.json() : null)
+    .then(d => { HF = d; updateOcclusion(); })
+    .catch(() => {});
+  function hAt(x, z){
+    if (!HF) return -9999;
+    const i = Math.round((x - HF.x0) / HF.step), j = Math.round((z - HF.z0) / HF.step);
+    if (i < 0 || i >= HF.nx || j < 0 || j >= HF.nz) return -9999;
+    return HF.h[j * HF.nx + i];
+  }
+  function updateOcclusion(){
+    if (!HF) return;
+    const o = mv.getCameraOrbit(), t = mv.getCameraTarget();
+    const sp = Math.sin(o.phi), cp = Math.cos(o.phi), st = Math.sin(o.theta), ct = Math.cos(o.theta);
+    const cam = { x:t.x + o.radius*sp*st, y:t.y + o.radius*cp, z:t.z + o.radius*sp*ct };
+    mv.querySelectorAll('.poi').forEach(b => {
+      const p = b.dataset.position.split(/\s+/).map(Number);
+      const dx = cam.x-p[0], dy = cam.y-p[1], dz = cam.z-p[2];
+      const len = Math.hypot(dx, dy, dz) || 1;
+      const ux = dx/len, uy = dy/len, uz = dz/len;
+      let occ = false;
+      for (let d = 1.3; d < len - 2; d += 0.8) {          // skip the surface the marker sits on
+        const h = hAt(p[0] + ux*d, p[2] + uz*d);
+        if (h > -9000 && h > p[1] + uy*d + 0.4) { occ = true; break; }   // ground/building rises above the sightline
+      }
+      b.classList.toggle('occluded', occ);
+    });
+  }
+  let occRAF = 0;
+  function scheduleOcclusion(){ if (occRAF) return; occRAF = requestAnimationFrame(() => { occRAF = 0; updateOcclusion(); }); }
+  mv.addEventListener('camera-change', scheduleOcclusion);
+
   fetch('pois.json', { cache: 'no-cache' })
     .then(r => r.ok ? r.json() : Promise.reject())
     .then(d => {
@@ -379,6 +415,7 @@
         const p = POIS[initial.poi - 1];
         openPanel(p, mv.querySelector('[slot="hotspot-poi-' + p.id + '"]'));
       }
+      requestAnimationFrame(() => requestAnimationFrame(updateOcclusion));
     })
     .catch(() => { /* no pois.json yet — viewer still works */ });
 

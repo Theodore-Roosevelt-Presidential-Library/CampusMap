@@ -1,32 +1,194 @@
 {
-  "_comment": "Points of interest for the TRPL campus viewer. Each POI: id (unique), title, image (path, optional), description, cta {label,url} (optional, opens in a new tab), position 'x y z' and normal 'x y z' on the 3D model. Use the coordinate picker (add ?edit to the URL, then right-click the model) to grab position/normal for new POIs. Sample copy below is placeholder — replace with final text and images.",
+  "_comment": "TRPL campus viewer points of interest. Each POI: id (unique), title, image (path in img/poi/, optional), description, cta {label,url} (optional, opens in a new tab), position 'x y z' and normal 'x y z' on the 3D model. Add ?edit to the URL and right-click the model to grab coordinates for new POIs. Descriptions drafted from the TRPL story guide, press backgrounder, and trlibrary.com; a few names/facts are flagged for verification. Images are placeholders — drop real photos into img/poi/ named to match each id.",
   "pois": [
     {
-      "id": "library",
-      "title": "The Library",
-      "image": "img/poi/library.jpg",
-      "description": "Set into the Badlands rather than perched on top of them, the Library's living green roof and warm rammed-earth walls fold quietly into the landscape that shaped Theodore Roosevelt.",
-      "cta": { "label": "Plan your visit", "url": "https://www.trlibrary.com" },
-      "position": "-30.55 2.06 -76.40",
-      "normal": "-0.811 -0.002 0.585"
+      "id": "two-track-trail",
+      "title": "Two-Track Trail",
+      "image": "img/poi/two-track-trail.jpg",
+      "description": "A ranch-style two-track — the twin ruts left by wagon and truck wheels — heads off across the open prairie the way roads were first cut in TR's cattle days. It doubles as a mountain-bike route out to the Maah Daah Hey Trail access, so ride or walk it to feel the scale of the Badlands and watch for pronghorn and grouse moving through the grass.",
+      "cta": { "label": "Explore the grounds", "url": "https://www.trlibrary.com/visit/outdoors" },
+      "position": "-39.25 1.36 -63.15",
+      "normal": "0.000 1.000 0.000"
     },
     {
-      "id": "overlook-loops",
-      "title": "Overlook Loops",
+      "id": "breezeway",
+      "title": "The Breezeway",
+      "image": "img/poi/breezeway.jpg",
+      "description": "The open-air breezeway is the building's spine — an outdoor passage cut straight through the middle between the two wings, with the mass-timber structure left bare overhead and the Badlands framed at each end. Pass through to move from one wing to the other, step out of the wind, and watch the landscape open up on the far side.",
+      "cta": { "label": "See the design", "url": "https://www.trlibrary.com/project/design" },
+      "position": "-28.99 1.40 -75.20",
+      "normal": "0.000 1.000 0.000"
+    },
+    {
+      "id": "outdoor-classroom",
+      "title": "Outdoor Classroom",
+      "image": "img/poi/outdoor-classroom.jpg",
+      "description": "An open-air classroom on the prairie, built so lessons can happen with the Badlands themselves as the subject. School groups, families, and visiting programs gather here for hands-on learning about the land, its wildlife, and the conservation ideas that shaped Theodore Roosevelt — the outdoors as both classroom and lesson.",
+      "cta": { "label": "Teaching resources", "url": "https://www.trlibrary.com/teach-tr" },
+      "position": "-44.62 1.36 -57.96",
+      "normal": "0.000 1.000 0.000"
+    },
+    {
+      "id": "overlook",
+      "title": "The Overlook",
       "image": "img/poi/overlook.jpg",
-      "description": "Two spiraling boardwalks lift you out over the draw for a slow, deliberate look at the badlands country.",
-      "cta": null,
-      "position": "-36.42 1.32 -43.92",
-      "normal": "0 1 0"
+      "description": "Where the boardwalk reaches out over a Badlands draw, the deck widens into an overlook with a clear view across the ground below and the prairie beyond. Stop here to rest at the railing, feel the wind come up the draw, and scan for hawks overhead, deer in the brush, and the shifting light on the buttes.",
+      "cta": { "label": "See the design", "url": "https://www.trlibrary.com/project/design" },
+      "position": "-36.90 1.30 -44.02",
+      "normal": "-0.349 -0.000 0.937"
     },
     {
-      "id": "west-trail",
-      "title": "West Trail",
-      "image": "img/poi/west-trail.jpg",
-      "description": "The western path traces the rim, connecting the campus to the wider landscape on foot.",
-      "cta": null,
-      "position": "-52.07 1.13 -74.93",
-      "normal": "0 1 0"
+      "id": "picnic-area",
+      "title": "Picnic Area",
+      "image": "img/poi/picnic-area.jpg",
+      "description": "Picnic tables set along the boardwalk with wide-open prairie on every side. Bring your own lunch or pick up a boxed meal from the Salt + Scoria restaurant, settle in at a table, and take your time over the view before heading back out onto the trail.",
+      "cta": { "label": "Dining at the Library", "url": "https://www.trlibrary.com/visit/eat" },
+      "position": "-50.61 1.13 -80.77",
+      "normal": "0.000 1.000 0.000"
+    },
+    {
+      "id": "netting",
+      "title": "The Netting",
+      "image": "img/poi/netting.jpg",
+      "description": "At the boardwalk's bridge, hammock-like netting is strung across an opening in the deck so you can lie back over open air. Kids and grown-ups alike stretch out here to feel the Badlands breeze, watch the clouds pass, and look straight down as the ground falls away beneath them.",
+      "cta": { "label": "See the design", "url": "https://www.trlibrary.com/project/design" },
+      "position": "-43.35 1.15 -79.36",
+      "normal": "0.000 1.000 0.000"
+    },
+    {
+      "id": "medicinal-garden",
+      "title": "Medicinal Garden",
+      "image": "img/poi/medicinal-garden.jpg",
+      "description": "A garden of native Badlands plants long used as food and medicine, planted with guidance from the MHA (Mandan, Hidatsa, and Arikara) Nation. Walk the paths to learn which prairie plants sustained people here for generations, and to see how traditional knowledge is woven right into the Library's grounds.",
+      "cta": { "label": "Native Plant Project", "url": "https://www.trlibrary.com/project/native-plant-project" },
+      "position": "-39.78 1.13 -81.45",
+      "normal": "0.000 1.000 0.000"
+    },
+    {
+      "id": "trailhead-swings",
+      "title": "Trailhead & Swings",
+      "image": "img/poi/trailhead-swings.jpg",
+      "description": "The Library's trailhead, where the campus paths meet the wider Badlands and it's easy to get your bearings. A bike repair station stands ready to sort out your ride before you set off, the boardwalk loops the butte close to home, and longer routes branch off toward the overlooks and out to the Maah Daah Hey Trail.",
+      "cta": { "label": "Hiking from the Library", "url": "https://www.trlibrary.com/visit/hiking" },
+      "position": "-25.30 1.69 -60.12",
+      "normal": "0.000 1.000 0.000"
+    },
+    {
+      "id": "sunken-path",
+      "title": "Sunken Path",
+      "image": "img/poi/sunken-path.jpg",
+      "description": "At the boardwalk's high point the trail splits in two. Take the high road for open, all-around views to the horizon — or drop into the sunken path, where the walls rise around you and you come eye-to-eye with the soil, the insects, and the tough little plants that make a prairie work.",
+      "cta": { "label": "See the design", "url": "https://www.trlibrary.com/project/design" },
+      "position": "-57.21 1.10 -61.03",
+      "normal": "-0.050 0.998 0.050"
+    },
+    {
+      "id": "maah-daah-hey",
+      "title": "Maah Daah Hey Trail Access",
+      "image": "img/poi/maah-daah-hey.jpg",
+      "description": "From here the Library connects straight onto the Maah Daah Hey Trail — 144 miles of single-track winding through the North Dakota Badlands. Hikers, mountain bikers, and horseback riders can pick up the trail and go as far as the day (or the week) allows, with Theodore Roosevelt National Park and backcountry campgrounds along the way.",
+      "cta": { "label": "Maah Daah Hey Trail", "url": "https://www.fs.usda.gov/r01/dpg/recreation/trails/maah-daah-hey-trail" },
+      "position": "-67.04 1.16 -69.29",
+      "normal": "0.178 0.976 0.126"
+    },
+    {
+      "id": "west-wing",
+      "title": "West Wing",
+      "image": "img/poi/west-wing.jpg",
+      "description": "The West Wing holds the heart of the Library: the permanent museum galleries, the Salt + Scoria restaurant, the gift shop, and a lobby anchored by a striking rammed-earth wall. It's also home to the Microsoft Gallery, where rotating exhibitions bring new stories through the year — all sheltered beneath the sweeping green roof and linked to the East Wing by the open-air breezeway.",
+      "cta": { "label": "See the design", "url": "https://www.trlibrary.com/project/design" },
+      "position": "-31.12 1.76 -77.20",
+      "normal": "-0.811 -0.007 0.585"
+    },
+    {
+      "id": "east-wing",
+      "title": "East Wing",
+      "image": "img/poi/east-wing.jpg",
+      "description": "The East Wing is the Library's gathering side — home to the auditorium, where talks, films, and live programs take place, and two classrooms for school groups and hands-on learning. It connects to the West Wing across the open-air breezeway, the two halves sheltering under one continuous prairie roof.",
+      "cta": { "label": "See the design", "url": "https://www.trlibrary.com/project/design" },
+      "position": "-26.26 1.67 -73.46",
+      "normal": "-0.739 0.000 0.674"
+    },
+    {
+      "id": "rock-garden",
+      "title": "Rock Garden",
+      "image": "img/poi/rock-garden.jpg",
+      "description": "A garden of Badlands stone and hardy native plantings set into the campus grounds — a quiet place to slow down, look closely at the textures of rock and prairie, and rest for a moment between the trails.",
+      "cta": { "label": "Native Plant Project", "url": "https://www.trlibrary.com/project/native-plant-project" },
+      "position": "-24.09 1.15 -70.44",
+      "normal": "0.000 1.000 0.000"
+    },
+    {
+      "id": "native-plants",
+      "title": "Native Plants",
+      "image": "img/poi/native-plants.jpg",
+      "description": "Part of the Native Plant Project: seeds of more than 200 local prairie species were hand-gathered near TR's ranches, grown out, and replanted across the campus to rebuild a rare Badlands ecosystem. Look closely to spot grasses and wildflowers that had nearly vanished from this ground, now taking root again.",
+      "cta": { "label": "Native Plant Project", "url": "https://www.trlibrary.com/project/native-plant-project" },
+      "position": "-30.33 2.14 -82.33",
+      "normal": "-0.000 0.977 -0.213"
+    },
+    {
+      "id": "rooftop-overlook",
+      "title": "Rooftop Overlook",
+      "image": "img/poi/rooftop-overlook.jpg",
+      "description": "Walk up onto the accessible green roof for some of the widest views on the campus — out over Theodore Roosevelt National Park, the town of Medora, and the Little Missouri valley. Come by day for the panorama, or stay after dark for some of the best stargazing skies anywhere.",
+      "cta": { "label": "See the design", "url": "https://www.trlibrary.com/project/design" },
+      "position": "-25.23 2.40 -80.56",
+      "normal": "0.000 1.000 0.005"
+    },
+    {
+      "id": "skylights",
+      "title": "Skylights",
+      "image": "img/poi/skylights.jpg",
+      "description": "The sculptural skylights rising from the roof aren't only for looks — they channel daylight down through solar tubes into the galleries below, cutting the need for electric light. Stand beside them on the roof walk to see sustainability built right into the architecture.",
+      "cta": { "label": "Sustainability", "url": "https://www.trlibrary.com/project/sustainability" },
+      "position": "-28.21 2.52 -77.35",
+      "normal": "0.011 1.000 0.011"
+    },
+    {
+      "id": "green-roof-path",
+      "title": "Green Roof Walking Path",
+      "image": "img/poi/green-roof-path.jpg",
+      "description": "A living prairie roof — roughly 121,000 square feet of native grasses and wildflowers — planted so it merges seamlessly into the surrounding butte. Follow the walking path across the top of the building, where it becomes hard to tell where the roof ends and the Badlands begin.",
+      "cta": { "label": "Native Plant Project", "url": "https://www.trlibrary.com/project/native-plant-project" },
+      "position": "-21.87 1.56 -71.49",
+      "normal": "-0.981 0.000 -0.192"
+    },
+    {
+      "id": "solar-canopies",
+      "title": "Solar Canopies",
+      "image": "img/poi/solar-canopies.jpg",
+      "description": "Solar arrays that, together with the geothermal system, generate more clean energy across a year than the Library uses. They're central to the Library's pursuit of the Living Building Challenge — one of the world's most rigorous sustainability standards, which asks a building to give back more to its environment than it takes.",
+      "cta": { "label": "Sustainability", "url": "https://www.trlibrary.com/project/sustainability" },
+      "position": "-18.87 1.86 -51.83",
+      "normal": "0.000 1.000 0.000"
+    },
+    {
+      "id": "boardwalk",
+      "title": "The Boardwalk",
+      "image": "img/poi/boardwalk.jpg",
+      "description": "A nearly mile-long elevated boardwalk loops out from the building and around the butte, threading through restored native grassland with plenty of places to stop, sit, and look. Walk the full loop to take in the whole landscape at an easy pace — the same ground a young Theodore Roosevelt once rode.",
+      "cta": { "label": "Explore the grounds", "url": "https://www.trlibrary.com/visit/outdoors" },
+      "position": "-29.63 1.36 -51.68",
+      "normal": "0.000 1.000 0.000"
+    },
+    {
+      "id": "parking-geothermal",
+      "title": "Parking & Geothermal",
+      "image": "img/poi/parking-geothermal.jpg",
+      "description": "The main arrival point — and, hidden below, the geothermal system that heats and cools the whole Library. A field of wells reaches deep underground, where the temperature holds steady year-round; the system draws that warmth up in winter and sends heat back down in summer, using a fraction of the energy of conventional heating and cooling. The parking itself was kept deliberately modest, so it's the Badlands, not the asphalt, that greet you first.",
+      "cta": { "label": "Sustainability", "url": "https://www.trlibrary.com/project/sustainability" },
+      "position": "-18.82 1.35 -48.81",
+      "normal": "0.000 1.000 0.000"
+    },
+    {
+      "id": "picnic-area-2",
+      "title": "Picnic Area",
+      "image": "img/poi/picnic-area-2.jpg",
+      "description": "Another spot to spread out a Badlands picnic, a little further along the grounds. Boxed lunches from the Salt + Scoria restaurant travel well out here — settle in at a table, enjoy the quiet, and let the prairie set the pace before you move on.",
+      "cta": { "label": "Dining at the Library", "url": "https://www.trlibrary.com/visit/eat" },
+      "position": "-12.96 1.04 -45.59",
+      "normal": "0.000 1.000 0.000"
     }
   ]
 }
