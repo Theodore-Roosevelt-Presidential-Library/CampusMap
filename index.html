@@ -27,8 +27,8 @@
     --font-body:'Clearface',Georgia,'Times New Roman',serif;
     --font-ui:'Frutiger',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
   * { box-sizing:border-box; }
-  html,body { margin:0; height:100%; background:#ffffff; color:var(--text); font-family:var(--font-ui); }
-  .stage { position:relative; width:100%; height:100%; }
+  html,body { margin:0; height:100%; background:#ffffff; color:var(--text); font-family:var(--font-ui); overflow:hidden; }
+  .stage { position:relative; width:100%; height:100%; overflow:hidden; }   /* clip the off-screen (closed) panel */
   model-viewer { width:100%; height:100%; background:#ffffff; --poster-color:#ffffff; cursor:crosshair;
     --min-hotspot-opacity:1; }   /* disable model-viewer's facing dim; occlusion handled by heightfield */
   model-viewer.dragging { cursor:grabbing; }
@@ -68,6 +68,11 @@
   @media (max-width: 430px){
     .guide{ gap:8px 12px; font-size:10px; }
   }
+  /* compact chrome when embedded in another page */
+  .embedded .guide { gap:7px 12px; padding:6px 11px; font-size:10.5px; bottom:12px; }
+  .embedded .guide svg { width:14px; height:14px; }
+  .embedded .logo img { height:30px; }
+  .embedded .embed-btn { display:none; }
 
   /* POI markers (model-viewer hotspots) */
   .poi { width:14px; height:14px; border-radius:50%; padding:0; cursor:pointer;
@@ -219,6 +224,7 @@
 
 <script>
   const mv = document.getElementById('mv');
+  if (window.self !== window.top) document.documentElement.classList.add('embedded');   // compact chrome inside an iframe
   const fill = document.getElementById('fill');
   const ploss = document.getElementById('ploss');
 
