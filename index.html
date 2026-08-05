@@ -112,6 +112,27 @@
   .picker button { font:inherit; margin-top:8px; cursor:pointer; border:1px solid #555;
     background:#3a3f45; color:#fff; border-radius:6px; padding:4px 10px; }
 
+  /* embed button + dialog */
+  .embed-btn { position:absolute; top:20px; left:20px; z-index:6; display:flex; align-items:center; justify-content:center;
+    width:44px; height:44px; background:rgba(255,255,255,.94); border:1px solid var(--line); border-radius:2px;
+    color:var(--text); cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,.08); }
+  .embed-btn:hover { border-color:var(--accent); }
+  .embed-btn svg { width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  .embed-modal { position:absolute; inset:0; z-index:20; background:rgba(0,0,0,.35); display:none; align-items:center; justify-content:center; }
+  .embed-modal.open { display:flex; }
+  .embed-card { background:#fff; border-radius:4px; width:min(560px,92vw); max-height:88vh; overflow:auto;
+    padding:24px 24px 26px; box-shadow:0 14px 44px rgba(0,0,0,.28); position:relative; }
+  .embed-card h2 { font-family:var(--font-display); font-weight:800; text-transform:uppercase; letter-spacing:.02em; font-size:22px; margin:0 0 4px; }
+  .embed-card p { font-family:var(--font-body); font-size:15px; line-height:1.5; color:#41454a; margin:0 0 8px; }
+  .embed-card label { font-family:var(--font-ui); font-weight:700; font-size:11px; text-transform:uppercase; letter-spacing:.04em; color:#6b7075; display:block; margin:16px 0 6px; }
+  .embed-card textarea { width:100%; height:64px; font:12px/1.4 ui-monospace,Menlo,monospace; border:1px solid var(--line);
+    border-radius:2px; padding:9px; resize:vertical; color:var(--text); background:#faf9f6; }
+  .embed-card .copy { margin-top:8px; font-family:var(--font-ui); font-weight:700; font-size:12px; border:1px solid var(--accent-dark);
+    background:transparent; color:var(--text); border-radius:2px; padding:7px 14px; cursor:pointer; transition:background .12s; }
+  .embed-card .copy:hover { background:var(--accent-dark); }
+  .embed-card .x { position:absolute; top:14px; right:14px; width:30px; height:30px; border:1px solid var(--line);
+    background:#fff; border-radius:2px; cursor:pointer; font-size:17px; color:var(--text); }
+
   /* loading */
   .loading { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center;
     justify-content:center; gap:14px; pointer-events:none; }
@@ -150,6 +171,9 @@
   </model-viewer>
 
   <div class="zoom">
+    <button id="fs" title="Full screen" aria-label="Toggle full screen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+    </button>
     <button id="poiToggle" title="Hide points of interest" aria-label="Toggle points of interest">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.2-6-10a6 6 0 1 1 12 0c0 4.8-6 10-6 10z"/><circle cx="12" cy="11" r="2"/></svg>
     </button>
@@ -176,6 +200,21 @@
   </aside>
 
   <div class="picker" id="picker"></div>
+
+  <button class="embed-btn" id="embedBtn" title="Get embed code" aria-label="Get embed code">
+    <svg viewBox="0 0 24 24"><path d="M8 9l-4 3 4 3M16 9l4 3-4 3M13 6l-2 12"/></svg>
+  </button>
+
+  <div class="embed-modal" id="embedModal">
+    <div class="embed-card">
+      <button class="x" id="embedClose" aria-label="Close">×</button>
+      <h2>Embed this view</h2>
+      <p>Paste this into a web page. The current camera angle, zoom, and open point of interest are carried in the link, so it opens exactly where you are now.</p>
+      <label>JavaScript embed</label>
+      <textarea id="embedJs" readonly></textarea>
+      <button class="copy" data-target="embedJs">Copy script</button>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -444,6 +483,40 @@
     document.getElementById('copySnip').onclick = () => {
       if (navigator.clipboard) navigator.clipboard.writeText(snippet);
       const b = document.getElementById('copySnip'); b.textContent = 'Copied ✓'; setTimeout(() => b.textContent = 'Copy POI JSON', 1200);
+    };
+  });
+
+  // ---------- Full screen ----------
+  const fsBtn = document.getElementById('fs');
+  fsBtn.onclick = () => {
+    if (document.fullscreenElement) { document.exitFullscreen(); }
+    else if (stage.requestFullscreen) { stage.requestFullscreen(); }
+    else if (stage.webkitRequestFullscreen) { stage.webkitRequestFullscreen(); }
+  };
+  document.addEventListener('fullscreenchange', () => {
+    const on = !!document.fullscreenElement;
+    fsBtn.querySelector('svg').innerHTML = on
+      ? '<path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/>'
+      : '<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>';
+  });
+
+  // ---------- Embed dialog ----------
+  const embedModal = document.getElementById('embedModal');
+  function openEmbed(){
+    updateURL();                                   // sync the URL to the current view first
+    const v = new URLSearchParams(location.search).get('v') || '';
+    document.getElementById('embedJs').value =
+      `<script src="${location.origin}/embed.js" data-view="${v}" data-height="600"><\/script>`;
+    embedModal.classList.add('open');
+  }
+  document.getElementById('embedBtn').onclick = openEmbed;
+  document.getElementById('embedClose').onclick = () => embedModal.classList.remove('open');
+  embedModal.addEventListener('click', (e) => { if (e.target === embedModal) embedModal.classList.remove('open'); });
+  document.querySelectorAll('.embed-card .copy').forEach(btn => {
+    btn.onclick = () => {
+      const ta = document.getElementById(btn.dataset.target);
+      ta.select(); if (navigator.clipboard) navigator.clipboard.writeText(ta.value);
+      const o = btn.textContent; btn.textContent = 'Copied ✓'; setTimeout(() => btn.textContent = o, 1200);
     };
   });
 </script>

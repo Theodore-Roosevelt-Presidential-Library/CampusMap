@@ -22,9 +22,11 @@ Live site: **https://campus.labs.trlibrary.com**
 
 - Starts framed on the Library and boardwalk (camera locked above the horizon so the underside isn't visible)
 - Matte materials, white background so terrain blends into the page
-- Manual +/− zoom (lower right) plus scroll/drag/pinch; touch-aware controls guide
+- Manual +/− zoom, POI show/hide toggle, and a full-screen button (lower right); plus scroll/drag/pinch and a touch-aware controls guide
 - Double-click (or double-tap) a point to recenter the view there
-- Points of interest: gold markers that open a slide-out info panel
+- Points of interest: subdued markers that open a slide-out info panel; markers hide when a building or berm blocks the line of sight (via a precomputed `heightfield.json`)
+- Shareable views: camera angle, zoom, target, and open POI are encoded in a short `?v=` URL token, updated live in the address bar
+- Embeddable into any web page (see Embedding below), preserving the starting view
 - Responsive: starting distance adapts to the viewport; works on touch devices
 
 ## Points of interest (POIs)
@@ -48,6 +50,16 @@ Clicking a marker slides an info panel out from the right. `image` and `cta` are
 ### Authoring new POIs (coordinate picker)
 
 Open the viewer with `?edit` in the URL (e.g. `http://localhost:8734/?edit` or `https://campus.labs.trlibrary.com/?edit`), then **right-click** any point on the model. A readout shows the `position` and `normal` and a **Copy POI JSON** button that copies a ready-to-paste entry. Add it to `pois.json`. (Right-click does nothing visible for normal visitors — the picker only appears in `?edit` mode.)
+
+## Embedding
+
+The viewer can be dropped into any web page. Frame the view you want, click **Embed** (top-left), and copy the snippet — it carries the current camera angle, zoom, and open POI via the `?v=` token.
+
+```html
+<script src="https://campus.labs.trlibrary.com/embed.js" data-view="VIEW_TOKEN" data-height="600"></script>
+```
+
+`embed.js` inserts a responsive, full-screen-capable iframe in place of the script tag. `data-view` is optional — omit it to open the default view; `data-height` and `data-width` are also optional (px or any CSS length).
 
 ## Source preservation
 
