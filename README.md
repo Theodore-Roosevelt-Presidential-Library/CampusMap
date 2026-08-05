@@ -9,9 +9,13 @@ Live site: **https://campus.labs.trlibrary.com**
 | File | Purpose |
 |------|---------|
 | `index.html` | The viewer (Google `<model-viewer>`, self-contained) |
+| `editor.html` | Visual POI editor — right-click to place markers, edit details, download `pois.json` |
+| `embed.js` | Embed loader — inserts the map into any page and passes the view/POIs through |
 | `pois.json` | Points of interest — pin coordinates + panel content (title, image, description, CTA) |
+| `heightfield.json` | Precomputed terrain/building height map used to hide markers blocked from view |
 | `TRPL_campus_web.glb` | Web-optimized campus model — Draco-compressed, GPU-instanced (7.7 MB) |
 | `img/` | Logo (`TRPL_Wordmark_Black_RGB.svg`) and POI images (`img/poi/`) |
+| `examples/` | Example host pages, e.g. the Maah Daah Hey 100 race-day mockup with a custom POI set |
 | `CNAME` | Custom domain for GitHub Pages |
 | `.github/workflows/deploy.yml` | Builds & deploys the site to GitHub Pages on every push to `main` |
 | `View TRPL Campus.command` | Double-click (macOS) to run a local server from this folder |
