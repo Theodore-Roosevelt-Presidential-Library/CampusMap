@@ -27,6 +27,7 @@ jobs:
         run: |
           mkdir -p _site
           cp index.html _site/
+          cp editor.html _site/
           cp embed.js _site/
           cp pois.json _site/
           cp heightfield.json _site/

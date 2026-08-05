@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TRPL Campus Map — POI Editor</title>
+<style>
+  @font-face{font-family:'Dharma Gothic E';src:url('https://www.trlibrary.com/themes/custom/trpl/css/dharma_type-dharmagothice-exbold.woff2') format('woff2');font-weight:800;font-display:swap;}
+  @font-face{font-family:'Frutiger';src:url('https://www.trlibrary.com/themes/custom/trpl/css/frutigerltstd-regular.woff2') format('woff2');font-weight:400;font-display:swap;}
+  @font-face{font-family:'Frutiger';src:url('https://www.trlibrary.com/themes/custom/trpl/css/frutigerltstd-bold.woff2') format('woff2');font-weight:700;font-display:swap;}
+  :root{ --dark:#25282a; --sand:#d1ccbd; --orange:#e7805d; --orange-d:#d07556; --line:#d8d5cf; }
+  *{box-sizing:border-box;}
+  html,body{ margin:0; height:100%; font-family:'Frutiger',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif; color:var(--dark); }
+  .app{ display:flex; height:100vh; }
+  .map{ flex:1; min-width:0; background:#fff; }
+  .map iframe{ width:100%; height:100%; border:0; display:block; }
+  .side{ width:410px; flex:none; background:#f5f3ee; border-left:1px solid var(--line); display:flex; flex-direction:column; }
+  .side header{ padding:16px 18px; background:var(--dark); color:#fff; }
+  .side header h1{ font-family:'Dharma Gothic E',Impact,sans-serif; font-weight:800; text-transform:uppercase; letter-spacing:.02em; font-size:24px; margin:0; }
+  .side header p{ margin:4px 0 0; font-size:12px; color:#c9c6c0; }
+  .bar{ display:flex; gap:8px; padding:12px 16px; border-bottom:1px solid var(--line); flex-wrap:wrap; align-items:center; }
+  .bar button, .bar label.btn{ font-weight:700; font-size:12px; border:1px solid var(--orange-d); background:transparent; color:var(--dark);
+    border-radius:2px; padding:7px 12px; cursor:pointer; transition:background .12s; }
+  .bar button.primary{ background:var(--orange-d); }
+  .bar button:hover, .bar label.btn:hover{ background:var(--orange-d); }
+  .bar input[type=file]{ display:none; }
+  .hint{ padding:10px 16px; font-size:12.5px; color:#5c5f63; background:#efece5; border-bottom:1px solid var(--line); }
+  .hint b{ color:var(--dark); }
+  #list{ flex:1; overflow:auto; padding:12px 14px 40px; }
+  .empty{ font-size:13px; color:#7a7d81; text-align:center; padding:30px 10px; }
+  .card{ background:#fff; border:1px solid var(--line); border-radius:3px; padding:12px; margin:0 0 12px; }
+  .card.sel{ border-color:var(--orange); box-shadow:0 0 0 2px rgba(231,128,93,.18); }
+  .chead{ display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+  .chead .num{ width:22px; height:22px; flex:none; border-radius:50%; background:var(--dark); color:#fff; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+  .chead .f-title{ flex:1; font-weight:700; font-size:14px; border:0; border-bottom:1px solid transparent; padding:4px 2px; background:transparent; }
+  .chead .f-title:focus{ outline:none; border-bottom-color:var(--orange); }
+  .chead button{ width:26px; height:26px; flex:none; border:1px solid var(--line); background:#fff; border-radius:2px; cursor:pointer; font-size:14px; color:var(--dark); }
+  .chead button:hover{ border-color:var(--orange); }
+  .card label{ display:block; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:#7a7d81; margin:8px 0 3px; }
+  .card input, .card textarea{ width:100%; font:13px/1.4 inherit; border:1px solid var(--line); border-radius:2px; padding:6px 8px; color:var(--dark); background:#fff; }
+  .card textarea{ resize:vertical; }
+  .card .two{ display:flex; gap:8px; }
+  .card .two > div{ flex:1; min-width:0; }
+  .card .coord{ margin-top:8px; font:11px ui-monospace,Menlo,monospace; color:#9498; color:#8a8f95; word-break:break-all; }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="map"><iframe id="map" src="/?edit&pois=none" allow="fullscreen"></iframe></div>
+  <aside class="side">
+    <header>
+      <h1>POI Editor</h1>
+      <p>Right-click the map to drop a point, fill in the details, then download your JSON.</p>
+    </header>
+    <div class="bar">
+      <button id="newBtn">New / clear</button>
+      <label class="btn" for="importFile">Import JSON</label>
+      <input type="file" id="importFile" accept=".json,application/json">
+      <button id="downloadBtn" class="primary">Download pois.json</button>
+    </div>
+    <div class="hint"><b>Tip:</b> right-click anywhere on the model to add a marker there. Markers seat themselves on the surface automatically.</div>
+    <div id="list"></div>
+  </aside>
+</div>
+
+<script>
+  let pois = [];
+  let selectedIdx = -1;
+  const map = document.getElementById('map');
+  const send = (msg) => { if (map.contentWindow) map.contentWindow.postMessage(msg, '*'); };
+
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const slug = (s) => (s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'poi';
+  function uniqueId(base, ignore){ let id = base, n = 1; while (pois.some((p, i) => i !== ignore && p.id === id)) id = base + '-' + (++n); return id; }
+
+  function cleanPois(){
+    return pois.map(p => {
+      const o = { id: p.id, title: p.title || '', description: p.description || '', position: p.position, normal: p.normal };
+      if (p.image) o.image = p.image;
+      o.cta = (p.cta && p.cta.url) ? { label: p.cta.label || 'Learn more', url: p.cta.url } : null;
+      return o;
+    });
+  }
+  function pushToMap(){ send({ type: 'trpl:setPOIs', pois: cleanPois() }); }
+  let syncT = 0;
+  function scheduleSync(){ clearTimeout(syncT); syncT = setTimeout(pushToMap, 350); }
+
+  function render(){
+    const list = document.getElementById('list');
+    list.innerHTML = '';
+    if (!pois.length){ list.innerHTML = '<p class="empty">No points yet.<br>Right-click the map to drop your first one.</p>'; return; }
+    pois.forEach((p, i) => {
+      const card = document.createElement('div');
+      card.className = 'card' + (i === selectedIdx ? ' sel' : '');
+      card.innerHTML =
+        '<div class="chead">' +
+          '<span class="num">' + (i + 1) + '</span>' +
+          '<input class="f-title" placeholder="Title" value="' + esc(p.title) + '">' +
+          '<button class="loc" title="Fly to on map">◎</button>' +
+          '<button class="del" title="Delete">×</button>' +
+        '</div>' +
+        '<label>Description</label>' +
+        '<textarea class="f-desc" rows="3" placeholder="What visitors can do here…">' + esc(p.description) + '</textarea>' +
+        '<label>Image path (optional)</label>' +
+        '<input class="f-image" placeholder="img/poi/name.jpg" value="' + esc(p.image || '') + '">' +
+        '<div class="two">' +
+          '<div><label>CTA label</label><input class="f-ctal" placeholder="Learn more" value="' + esc(p.cta && p.cta.label || '') + '"></div>' +
+          '<div><label>CTA link</label><input class="f-ctau" placeholder="https://…" value="' + esc(p.cta && p.cta.url || '') + '"></div>' +
+        '</div>' +
+        '<div class="coord">id: ' + esc(p.id) + '  ·  pos ' + esc(p.position) + '  ·  nrm ' + esc(p.normal) + '</div>';
+      const q = (s) => card.querySelector(s);
+      q('.f-title').oninput = (e) => { p.title = e.target.value; p.id = uniqueId(slug(p.title), i); q('.coord').firstChild.textContent = 'id: ' + p.id + '  ·  pos ' + p.position + '  ·  nrm ' + p.normal; scheduleSync(); };
+      q('.f-desc').oninput = (e) => { p.description = e.target.value; scheduleSync(); };
+      q('.f-image').oninput = (e) => { p.image = e.target.value.trim(); scheduleSync(); };
+      q('.f-ctal').oninput = (e) => { p.cta = p.cta || {}; p.cta.label = e.target.value; scheduleSync(); };
+      q('.f-ctau').oninput = (e) => { p.cta = p.cta || {}; p.cta.url = e.target.value.trim(); scheduleSync(); };
+      q('.del').onclick = () => { pois.splice(i, 1); selectedIdx = -1; render(); pushToMap(); };
+      q('.loc').onclick = () => send({ type: 'trpl:focus', id: p.id });
+      card.addEventListener('mousedown', (e) => { if (!e.target.closest('input,textarea,button')) { selectedIdx = i; render(); } });
+      list.appendChild(card);
+    });
+  }
+
+  function addPOI(position, normal){
+    const p = { id: uniqueId('new-poi', -1), title: 'New POI', description: '', image: '', cta: null, position, normal };
+    pois.push(p); selectedIdx = pois.length - 1; render(); pushToMap();
+    const el = document.querySelector('.card.sel'); if (el){ el.scrollIntoView({ block: 'nearest' }); const t = el.querySelector('.f-title'); if (t){ t.focus(); t.select(); } }
+  }
+
+  window.addEventListener('message', (e) => {
+    const d = e.data; if (!d) return;
+    if (d.type === 'trpl:pick' && d.position){ addPOI(d.position, d.normal || '0.000 1.000 0.000'); }
+    else if (d.type === 'trpl:select' && d.id){ const i = pois.findIndex(p => p.id === d.id); if (i >= 0 && i !== selectedIdx){ selectedIdx = i; render(); const el = document.querySelectorAll('.card')[i]; if (el) el.scrollIntoView({ block: 'nearest' }); } }
+  });
+
+  document.getElementById('newBtn').onclick = () => { if (pois.length && !confirm('Clear all points and start over?')) return; pois = []; selectedIdx = -1; render(); pushToMap(); };
+  document.getElementById('downloadBtn').onclick = () => {
+    const blob = new Blob([JSON.stringify({ pois: cleanPois() }, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'pois.json'; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  };
+  document.getElementById('importFile').onchange = (e) => {
+    const f = e.target.files[0]; if (!f) return;
+    const rd = new FileReader();
+    rd.onload = () => {
+      try {
+        const j = JSON.parse(rd.result);
+        pois = (Array.isArray(j) ? j : (j.pois || [])).map(p => ({ id: p.id || uniqueId('poi', -1), title: p.title || '', description: p.description || '', image: p.image || '', cta: p.cta || null, position: p.position || '0 1 0', normal: p.normal || '0.000 1.000 0.000' }));
+        selectedIdx = -1; render(); pushToMap();
+      } catch (err){ alert('Could not parse JSON: ' + err.message); }
+    };
+    rd.readAsText(f); e.target.value = '';
+  };
+
+  map.addEventListener('load', () => { pushToMap(); });
+  render();
+</script>
+</body>
+</html>

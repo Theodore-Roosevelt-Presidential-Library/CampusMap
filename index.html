@@ -224,7 +224,8 @@
 
 <script>
   const mv = document.getElementById('mv');
-  if (window.self !== window.top) document.documentElement.classList.add('embedded');   // compact chrome inside an iframe
+  const EMBEDDED = window.self !== window.top;
+  if (EMBEDDED) document.documentElement.classList.add('embedded');   // compact chrome inside an iframe
   const fill = document.getElementById('fill');
   const ploss = document.getElementById('ploss');
 
@@ -401,6 +402,7 @@
     else { pCta.style.display = 'none'; }
     panel.classList.add('open'); panel.setAttribute('aria-hidden', 'false');
     currentPOI = p; updateURL();
+    if (EMBEDDED && p.id) parent.postMessage({ type: 'trpl:select', id: p.id }, '*');
   }
   function closePanel(){ panel.classList.remove('open'); panel.setAttribute('aria-hidden', 'true'); clearActive();
     if (currentPOI){ currentPOI = null; updateURL(); } }
@@ -462,28 +464,53 @@
     }
     requestAnimationFrame(() => requestAnimationFrame(updateOcclusion));
   }
-  fetch(poisSource, { cache: 'no-cache' })
-    .then(r => r.ok ? r.json() : Promise.reject())
-    .then(d => loadPOIs(d, true))
-    .catch(() => { /* no POI source reachable — viewer still works */ });
+  if (poisSource === 'none') {
+    loadPOIs([], false);                           // start empty (used by the POI editor)
+  } else {
+    fetch(poisSource, { cache: 'no-cache' })
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(d => loadPOIs(d, true))
+      .catch(() => { /* no POI source reachable — viewer still works */ });
+  }
 
   // Host pages can inject/replace POIs directly (no CORS needed):
   //   iframe.contentWindow.postMessage({ type: 'trpl:setPOIs', pois: [...] }, '*')
   window.addEventListener('message', (e) => {
-    const d = e.data;
-    if (d && d.type === 'trpl:setPOIs' && Array.isArray(d.pois)) { closePanel(); loadPOIs(d.pois, false); }
+    const d = e.data; if (!d) return;
+    if (d.type === 'trpl:setPOIs' && Array.isArray(d.pois)) { closePanel(); loadPOIs(d.pois, false); }
+    else if (d.type === 'trpl:focus' && d.id) {
+      const p = POIS.find(x => x.id === d.id);
+      if (p) {
+        const c = p.position.split(/\s+/).map(Number);
+        mv.cameraTarget = `${c[0]}m ${c[1]}m ${c[2]}m`;
+        openPanel(p, mv.querySelector('[slot="hotspot-poi-' + p.id + '"]'));
+      }
+    }
   });
 
-  // ---------- Coordinate picker (authoring tool: add ?edit to the URL) ----------
+  // ---------- Coordinate picker (authoring: add ?edit to the URL) ----------
   const picker = document.getElementById('picker');
+  // A marker-ready coordinate for a screen point: seated on the top surface with an upright
+  // normal for horizontal ground/roof; the surface normal is kept for vertical walls.
+  function seatedFromPoint(cx, cy){
+    const hit = mv.positionAndNormalFromPoint(cx, cy);
+    if (!hit || !hit.position) return null;
+    const p = hit.position.toString().replace(/m/g,'').trim().split(/\s+/).map(Number);
+    const n = (hit.normal ? hit.normal.toString() : '0 1 0').replace(/m/g,'').trim().split(/\s+/).map(Number);
+    if (Math.abs(n[1] || 0) > 0.5) {                 // horizontal surface → seat on top, upright marker
+      const top = (typeof hAt === 'function') ? hAt(p[0], p[2]) : -9999;
+      const y = (top > -9000 ? Math.max(p[1], top) : p[1]) + 0.2;
+      return { position: `${p[0].toFixed(2)} ${y.toFixed(2)} ${p[2].toFixed(2)}`, normal: '0.000 1.000 0.000' };
+    }
+    return { position: `${p[0].toFixed(2)} ${p[1].toFixed(2)} ${p[2].toFixed(2)}`,
+             normal: `${(n[0]||0).toFixed(3)} ${(n[1]||0).toFixed(3)} ${(n[2]||0).toFixed(3)}` };
+  }
   mv.addEventListener('contextmenu', (e) => {
-    e.preventDefault();                 // suppress the browser menu on right-click everywhere
+    e.preventDefault();                 // suppress the browser menu on right-click
     if (!EDIT) return;
-    const hit = mv.positionAndNormalFromPoint(e.clientX, e.clientY);
-    if (!hit || !hit.position){ picker.classList.add('show'); picker.textContent = 'No model surface here — right-click on the model.'; return; }
-    const fmt = (v, d) => v.toString().replace(/m/g, '').trim().split(/\s+/).map(n => (+n).toFixed(d)).join(' ');
-    const pos = fmt(hit.position, 2);
-    const nrm = hit.normal ? fmt(hit.normal, 3) : '0 1 0';
+    const seated = seatedFromPoint(e.clientX, e.clientY);
+    if (!seated) { if (!EMBEDDED) { picker.classList.add('show'); picker.textContent = 'No model surface here — right-click on the model.'; } return; }
+    if (EMBEDDED) { parent.postMessage({ type: 'trpl:pick', position: seated.position, normal: seated.normal }, '*'); return; }
     const snippet =
 `{
   "id": "new-poi",
@@ -491,10 +518,10 @@
   "image": "img/poi/new-poi.jpg",
   "description": "",
   "cta": null,
-  "position": "${pos}",
-  "normal": "${nrm}"
+  "position": "${seated.position}",
+  "normal": "${seated.normal}"
 }`;
-    picker.innerHTML = `<div>position: ${pos}<br>normal: ${nrm}</div><button id="copySnip">Copy POI JSON</button>`;
+    picker.innerHTML = `<div>position: ${seated.position}<br>normal: ${seated.normal}</div><button id="copySnip">Copy POI JSON</button>`;
     picker.classList.add('show');
     document.getElementById('copySnip').onclick = () => {
       if (navigator.clipboard) navigator.clipboard.writeText(snippet);

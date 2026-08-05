@@ -49,7 +49,11 @@ Clicking a marker slides an info panel out from the right. `image` and `cta` are
 
 ### Authoring new POIs (coordinate picker)
 
-Open the viewer with `?edit` in the URL (e.g. `http://localhost:8734/?edit` or `https://campus.labs.trlibrary.com/?edit`), then **right-click** any point on the model. A readout shows the `position` and `normal` and a **Copy POI JSON** button that copies a ready-to-paste entry. Add it to `pois.json`. (Right-click does nothing visible for normal visitors — the picker only appears in `?edit` mode.)
+Open the viewer with `?edit` in the URL (e.g. `http://localhost:8734/?edit` or `https://campus.labs.trlibrary.com/?edit`), then **right-click** any point on the model. A readout shows the `position` and `normal` and a **Copy POI JSON** button that copies a ready-to-paste entry. Coordinates are seated onto the surface automatically (lifted, upright normal). (Right-click does nothing visible for normal visitors — the picker only appears in `?edit` mode.)
+
+### Visual POI editor
+
+For building a whole set without touching JSON, open **`/editor.html`** (e.g. `https://campus.labs.trlibrary.com/editor.html`). Right-click the map to drop markers (they seat themselves on the surface), fill in each point's title, description, image, and CTA in the side panel, then click **Download pois.json**. **Import JSON** loads an existing set to keep editing, and the map updates live as you type. The finished file works either as the site's default `pois.json` or as a custom set in an embed (`data-pois`).
 
 ## Embedding
 
