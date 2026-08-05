@@ -6,21 +6,43 @@
 <title>TRPL Campus — 3D Model Viewer</title>
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
 <style>
-  :root { --accent:#c9a15a; --text:#2a2d31; --line:#e4e2dd; }
+  /* TRPL brand fonts (self-hosted on trlibrary.com) */
+  @font-face{font-family:'Dharma Gothic E';src:url('https://www.trlibrary.com/themes/custom/trpl/css/dharma_type-dharmagothice-exbold.woff2') format('woff2');font-weight:800;font-style:normal;font-display:swap;}
+  @font-face{font-family:'Dharma Gothic E';src:url('https://www.trlibrary.com/themes/custom/trpl/css/dharma_type-dharmagothice-bold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap;}
+  @font-face{font-family:'Clearface';src:url('https://www.trlibrary.com/themes/custom/trpl/css/clearfacestd-regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+  @font-face{font-family:'Clearface';src:url('https://www.trlibrary.com/themes/custom/trpl/css/clearfacestd-regularitalic.woff2') format('woff2');font-weight:400;font-style:italic;font-display:swap;}
+  @font-face{font-family:'Clearface';src:url('https://www.trlibrary.com/themes/custom/trpl/css/clearfacestd-bold.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap;}
+  @font-face{font-family:'Clearface';src:url('https://www.trlibrary.com/themes/custom/trpl/css/clearfacestd-heavy.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap;}
+  @font-face{font-family:'Frutiger';src:url('https://www.trlibrary.com/themes/custom/trpl/css/frutigerltstd-light.woff2') format('woff2');font-weight:300;font-style:normal;font-display:swap;}
+  @font-face{font-family:'Frutiger';src:url('https://www.trlibrary.com/themes/custom/trpl/css/frutigerltstd-regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+  @font-face{font-family:'Frutiger';src:url('https://www.trlibrary.com/themes/custom/trpl/css/frutigerltstd-bold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap;}
+
+  :root {
+    --accent:#e7805d;      /* Deep Orange — brand action color */
+    --accent-dark:#d07556; /* Deep Orange (dark) — secondary button border */
+    --marker:#25282a;      /* Dark Gray — subdued POI markers */
+    --text:#25282a;        /* Dark Gray */
+    --line:#d8d5cf;
+    --font-display:'Dharma Gothic E',Impact,'Arial Narrow',sans-serif;
+    --font-body:'Clearface',Georgia,'Times New Roman',serif;
+    --font-ui:'Frutiger',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
   * { box-sizing:border-box; }
-  html,body { margin:0; height:100%; background:#ffffff; color:var(--text);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  html,body { margin:0; height:100%; background:#ffffff; color:var(--text); font-family:var(--font-ui); }
   .stage { position:relative; width:100%; height:100%; }
   model-viewer { width:100%; height:100%; background:#ffffff; --poster-color:#ffffff; cursor:crosshair; }
   model-viewer.dragging { cursor:grabbing; }
 
   /* zoom controls, lower right */
   .zoom { position:absolute; right:20px; bottom:20px; display:flex; flex-direction:column; gap:8px; }
-  .zoom button { width:44px; height:44px; border-radius:10px; border:1px solid var(--line);
-    background:rgba(255,255,255,.92); color:var(--text); font-size:22px; line-height:1; cursor:pointer;
+  .zoom button { width:44px; height:44px; border-radius:2px; border:1px solid var(--line);
+    background:rgba(255,255,255,.94); color:var(--text); font-size:22px; line-height:1; cursor:pointer;
     box-shadow:0 1px 3px rgba(0,0,0,.08); display:flex; align-items:center; justify-content:center; }
-  .zoom button:hover { border-color:var(--accent); }
-  .zoom button:active { background:#f3efe6; }
+  .zoom button:hover { border-color:var(--accent); color:var(--accent); }
+  .zoom button:active { background:#f1eee8; }
+  .zoom button svg { width:20px; height:20px; }
+  .zoom #poiToggle { margin-bottom:6px; color:var(--marker); }       /* on-state: subdued dark pin */
+  .zoom #poiToggle.off { color:#a7abb0; }                            /* hidden-state: muted */
+  .stage.poi-hidden .poi { display:none; }
 
   /* logo, lower left */
   .logo { position:absolute; left:20px; bottom:20px; }
@@ -31,12 +53,12 @@
   .guide { position:absolute; left:50%; bottom:20px; transform:translateX(-50%);
     display:flex; flex-wrap:wrap; justify-content:center; gap:20px; align-items:center; padding:9px 18px;
     max-width:calc(100vw - 32px);
-    background:rgba(255,255,255,.9); border:1px solid var(--line); border-radius:14px;
+    background:rgba(255,255,255,.9); border:1px solid var(--line); border-radius:4px;
     box-shadow:0 1px 4px rgba(0,0,0,.08); font-size:12px; color:#54585d; user-select:none; }
   .guide .item { display:flex; align-items:center; gap:7px; white-space:nowrap; }
   .guide svg { width:18px; height:18px; stroke:#8a8f95; fill:none; stroke-width:1.6;
     stroke-linecap:round; stroke-linejoin:round; }
-  .guide b { font-weight:600; color:var(--text); }
+  .guide b { font-family:var(--font-ui); font-weight:700; color:var(--text); }
   @media (max-width: 720px){
     .guide{ gap:12px 14px; padding:7px 12px; font-size:11px; bottom:14px; }
     .guide svg{ width:16px; height:16px; }
@@ -45,6 +67,48 @@
   @media (max-width: 430px){
     .guide{ gap:8px 12px; font-size:10px; }
   }
+
+  /* POI markers (model-viewer hotspots) */
+  .poi { width:14px; height:14px; border-radius:50%; padding:0; cursor:pointer;
+    background:var(--marker); border:2px solid #fff; box-shadow:0 1px 3px rgba(0,0,0,.3);
+    transition:transform .12s ease, opacity .15s ease; }
+  .poi::after { content:''; position:absolute; inset:-5px; border-radius:50%;
+    border:1px solid var(--marker); opacity:.28; pointer-events:none; }
+  .poi:hover, .poi.active { transform:scale(1.28); }
+  .poi .lbl { position:absolute; bottom:calc(100% + 9px); left:50%; transform:translateX(-50%);
+    background:#2a2d31; color:#fff; font-size:11px; white-space:nowrap; padding:3px 8px;
+    border-radius:6px; opacity:0; pointer-events:none; transition:opacity .12s; }
+  .poi:hover .lbl { opacity:1; }
+
+  /* info panel, slides in from the right */
+  .panel { position:absolute; top:0; right:0; height:100%; width:360px; max-width:86vw; z-index:5;
+    background:#fff; border-left:1px solid var(--line); box-shadow:-6px 0 26px rgba(0,0,0,.12);
+    transform:translateX(100%); transition:transform .28s cubic-bezier(.4,0,.2,1);
+    display:flex; flex-direction:column; overflow:hidden; }
+  .panel.open { transform:translateX(0); }
+  .panel .close { position:absolute; top:12px; right:12px; width:32px; height:32px; z-index:2;
+    border-radius:2px; border:1px solid var(--line); background:rgba(255,255,255,.9);
+    cursor:pointer; font-size:18px; line-height:1; color:var(--text); }
+  .panel .pimg { width:100%; height:210px; object-fit:cover; background:#ece9e3; display:block; }
+  .panel .pbody { padding:24px; overflow:auto; }
+  .panel .ptitle { font-family:var(--font-display); font-weight:800; text-transform:uppercase;
+    letter-spacing:.015em; font-size:27px; line-height:1.04; margin:0 0 12px; }
+  .panel .pdesc { font-family:var(--font-body); font-size:16px; line-height:1.5; color:#41454a; margin:0 0 20px; }
+  /* secondary (outline) button — matches trlibrary.com: 2px radius, Frutiger 700, Deep Orange */
+  .panel .pcta { font-family:var(--font-ui); font-weight:700; font-size:16px; letter-spacing:normal;
+    text-transform:none; display:inline-block; background:transparent; color:var(--text);
+    border:1px solid var(--accent-dark); text-decoration:none; padding:10px 24px; border-radius:2px;
+    transition:background .12s ease, color .12s ease; }
+  .panel .pcta:hover { background:var(--accent-dark); color:#25282a; }
+  @media (max-width:480px){ .panel{ width:100%; max-width:100%; } }
+
+  /* coordinate picker (edit mode only) */
+  .picker { position:absolute; left:50%; top:16px; transform:translateX(-50%); z-index:6; display:none;
+    background:#2a2d31; color:#fff; font:12px ui-monospace,Menlo,monospace; padding:10px 14px;
+    border-radius:10px; max-width:90vw; box-shadow:0 4px 16px rgba(0,0,0,.3); }
+  .picker.show { display:block; }
+  .picker button { font:inherit; margin-top:8px; cursor:pointer; border:1px solid #555;
+    background:#3a3f45; color:#fff; border-radius:6px; padding:4px 10px; }
 
   /* loading */
   .loading { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center;
@@ -84,6 +148,9 @@
   </model-viewer>
 
   <div class="zoom">
+    <button id="poiToggle" title="Hide points of interest" aria-label="Toggle points of interest">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.2-6-10a6 6 0 1 1 12 0c0 4.8-6 10-6 10z"/><circle cx="12" cy="11" r="2"/></svg>
+    </button>
     <button id="zin" title="Zoom in" aria-label="Zoom in">+</button>
     <button id="zout" title="Zoom out" aria-label="Zoom out">−</button>
   </div>
@@ -95,6 +162,18 @@
   </div>
 
   <div class="guide" id="guide"></div>
+
+  <aside class="panel" id="panel" aria-hidden="true">
+    <button class="close" id="panelClose" aria-label="Close">×</button>
+    <img class="pimg" id="pImg" alt="" />
+    <div class="pbody">
+      <h2 class="ptitle" id="pTitle"></h2>
+      <p class="pdesc" id="pDesc"></p>
+      <a class="pcta" id="pCta" target="_blank" rel="noopener"></a>
+    </div>
+  </aside>
+
+  <div class="picker" id="picker"></div>
 </div>
 
 <script>
@@ -120,7 +199,51 @@
     mv.fieldOfView = START_FOV;
   }
 
-  let userMoved = false;
+  // ----- shareable URL state (compact permalink) -----
+  let POIS = [];
+  let currentPOI = null;
+  const params = new URLSearchParams(location.search);
+  const EDIT = params.has('edit');
+
+  // Pack [theta, phi, radius, tx, ty, tz, poiIndex] as quantized base36, '-' delimited.
+  function encodeState(o, t, poiIdx){
+    let th = o.theta * 180 / Math.PI; th = ((th % 360) + 540) % 360 - 180;   // normalize to -180..180
+    const q = [
+      Math.round(th * 10) + 1800,
+      Math.round(o.phi * 180 / Math.PI * 10),
+      Math.round(o.radius * 10),
+      Math.round((t.x + 250) * 10),
+      Math.round((t.y + 50) * 10),
+      Math.round((t.z + 250) * 10),
+      poiIdx || 0
+    ];
+    return q.map(n => Math.max(0, n).toString(36)).join('-');
+  }
+  function decodeState(s){
+    const a = (s || '').split('-').map(x => parseInt(x, 36));
+    if (a.length < 7 || a.some(n => Number.isNaN(n))) return null;
+    return { theta:(a[0]-1800)/10, phi:a[1]/10, radius:a[2]/10,
+             tx:a[3]/10-250, ty:a[4]/10-50, tz:a[5]/10-250, poi:a[6] };
+  }
+  const initial = params.has('v') ? decodeState(params.get('v')) : null;
+
+  let urlTimer;
+  function updateURL(){
+    const o = mv.getCameraOrbit(), t = mv.getCameraTarget();
+    const idx = currentPOI ? (POIS.findIndex(p => p.id === currentPOI.id) + 1) : 0;
+    const p = new URLSearchParams();
+    p.set('v', encodeState(o, t, idx));
+    if (EDIT) p.set('edit', '');
+    history.replaceState(null, '', location.pathname + '?' + p.toString());
+  }
+  function scheduleURL(){ clearTimeout(urlTimer); urlTimer = setTimeout(updateURL, 300); }
+  function applyDecoded(d){
+    mv.cameraTarget = `${d.tx}m ${d.ty}m ${d.tz}m`;
+    mv.cameraOrbit  = `${d.theta}deg ${d.phi}deg ${d.radius}m`;
+    mv.fieldOfView  = START_FOV;
+  }
+
+  let userMoved = !!initial;   // a permalink counts as "user-set" so auto-framing won't override it
   try { new ResizeObserver(() => { if (!userMoved) applyStartView(); }).observe(mv); } catch(_){}
   window.addEventListener('resize', () => { if (!userMoved) applyStartView(); });
 
@@ -131,7 +254,15 @@
     ploss.textContent = `Loading campus model… ${p}%`;
     if (e.detail.totalProgress >= 1) hideLoader();
   });
-  mv.addEventListener('load', () => { hideLoader(); applyStartView(); });
+  mv.addEventListener('load', () => {
+    hideLoader();
+    // Apply then snap; re-apply after model-viewer commits its attribute-driven default camera.
+    const apply = () => { if (initial) applyDecoded(initial); else applyStartView(); mv.jumpCameraToGoal(); };
+    apply();
+    requestAnimationFrame(() => requestAnimationFrame(apply));
+    setTimeout(apply, 220);
+  });
+  mv.addEventListener('camera-change', scheduleURL);
 
   // Manual zoom buttons (dolly by changing orbit radius; FOV stays fixed).
   function zoomBy(factor){
@@ -190,6 +321,94 @@
   ];
   document.getElementById('guide').innerHTML = guideItems
     .map(([ic,a,d]) => `<div class="item">${ICON[ic]}<span><b>${a}</b> ${d}</span></div>`).join('');
+
+  // ---------- Points of interest ----------
+  const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  function renderPOIs(pois){
+    mv.querySelectorAll('[slot^="hotspot-poi-"]').forEach(n => n.remove());
+    pois.forEach(p => {
+      if (!p.position) return;
+      const btn = document.createElement('button');
+      btn.slot = 'hotspot-poi-' + p.id;
+      btn.className = 'poi';
+      btn.dataset.position = p.position;
+      if (p.normal) btn.dataset.normal = p.normal;
+      btn.innerHTML = `<span class="lbl">${esc(p.title)}</span>`;
+      btn.addEventListener('click', (e) => { e.stopPropagation(); openPanel(p, btn); });
+      mv.appendChild(btn);
+    });
+  }
+
+  const panel = document.getElementById('panel');
+  const pImg = document.getElementById('pImg'), pTitle = document.getElementById('pTitle');
+  const pDesc = document.getElementById('pDesc'), pCta = document.getElementById('pCta');
+  function clearActive(){ mv.querySelectorAll('.poi.active').forEach(n => n.classList.remove('active')); }
+  function openPanel(p, btn){
+    clearActive(); if (btn) btn.classList.add('active');
+    if (p.image){ pImg.src = p.image; pImg.style.display = 'block'; pImg.onerror = () => { pImg.style.display = 'none'; }; }
+    else { pImg.removeAttribute('src'); pImg.style.display = 'none'; }
+    pTitle.textContent = p.title || '';
+    pDesc.textContent = p.description || '';
+    if (p.cta && p.cta.url){ pCta.textContent = p.cta.label || 'Learn more'; pCta.href = p.cta.url; pCta.style.display = 'inline-block'; }
+    else { pCta.style.display = 'none'; }
+    panel.classList.add('open'); panel.setAttribute('aria-hidden', 'false');
+    currentPOI = p; updateURL();
+  }
+  function closePanel(){ panel.classList.remove('open'); panel.setAttribute('aria-hidden', 'true'); clearActive();
+    if (currentPOI){ currentPOI = null; updateURL(); } }
+  document.getElementById('panelClose').onclick = closePanel;
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePanel(); });
+
+  // Toggle POI markers on/off for a clean view.
+  const stage = document.querySelector('.stage');
+  const poiToggle = document.getElementById('poiToggle');
+  poiToggle.onclick = () => {
+    const hidden = stage.classList.toggle('poi-hidden');
+    poiToggle.classList.toggle('off', hidden);
+    poiToggle.title = hidden ? 'Show points of interest' : 'Hide points of interest';
+    if (hidden) closePanel();
+  };
+
+  fetch('pois.json', { cache: 'no-cache' })
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(d => {
+      POIS = d.pois || [];
+      renderPOIs(POIS);
+      if (initial && initial.poi > 0 && POIS[initial.poi - 1]) {
+        const p = POIS[initial.poi - 1];
+        openPanel(p, mv.querySelector('[slot="hotspot-poi-' + p.id + '"]'));
+      }
+    })
+    .catch(() => { /* no pois.json yet — viewer still works */ });
+
+  // ---------- Coordinate picker (authoring tool: add ?edit to the URL) ----------
+  const picker = document.getElementById('picker');
+  mv.addEventListener('contextmenu', (e) => {
+    e.preventDefault();                 // suppress the browser menu on right-click everywhere
+    if (!EDIT) return;
+    const hit = mv.positionAndNormalFromPoint(e.clientX, e.clientY);
+    if (!hit || !hit.position){ picker.classList.add('show'); picker.textContent = 'No model surface here — right-click on the model.'; return; }
+    const fmt = (v, d) => v.toString().replace(/m/g, '').trim().split(/\s+/).map(n => (+n).toFixed(d)).join(' ');
+    const pos = fmt(hit.position, 2);
+    const nrm = hit.normal ? fmt(hit.normal, 3) : '0 1 0';
+    const snippet =
+`{
+  "id": "new-poi",
+  "title": "New POI",
+  "image": "img/poi/new-poi.jpg",
+  "description": "",
+  "cta": null,
+  "position": "${pos}",
+  "normal": "${nrm}"
+}`;
+    picker.innerHTML = `<div>position: ${pos}<br>normal: ${nrm}</div><button id="copySnip">Copy POI JSON</button>`;
+    picker.classList.add('show');
+    document.getElementById('copySnip').onclick = () => {
+      if (navigator.clipboard) navigator.clipboard.writeText(snippet);
+      const b = document.getElementById('copySnip'); b.textContent = 'Copied ✓'; setTimeout(() => b.textContent = 'Copy POI JSON', 1200);
+    };
+  });
 </script>
 </body>
 </html>

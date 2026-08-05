@@ -1,0 +1,32 @@
+{
+  "_comment": "Points of interest for the TRPL campus viewer. Each POI: id (unique), title, image (path, optional), description, cta {label,url} (optional, opens in a new tab), position 'x y z' and normal 'x y z' on the 3D model. Use the coordinate picker (add ?edit to the URL, then right-click the model) to grab position/normal for new POIs. Sample copy below is placeholder — replace with final text and images.",
+  "pois": [
+    {
+      "id": "library",
+      "title": "The Library",
+      "image": "img/poi/library.jpg",
+      "description": "Set into the Badlands rather than perched on top of them, the Library's living green roof and warm rammed-earth walls fold quietly into the landscape that shaped Theodore Roosevelt.",
+      "cta": { "label": "Plan your visit", "url": "https://www.trlibrary.com" },
+      "position": "-30.55 2.06 -76.40",
+      "normal": "-0.811 -0.002 0.585"
+    },
+    {
+      "id": "overlook-loops",
+      "title": "Overlook Loops",
+      "image": "img/poi/overlook.jpg",
+      "description": "Two spiraling boardwalks lift you out over the draw for a slow, deliberate look at the badlands country.",
+      "cta": null,
+      "position": "-36.42 1.32 -43.92",
+      "normal": "0 1 0"
+    },
+    {
+      "id": "west-trail",
+      "title": "West Trail",
+      "image": "img/poi/west-trail.jpg",
+      "description": "The western path traces the rim, connecting the campus to the wider landscape on foot.",
+      "cta": null,
+      "position": "-52.07 1.13 -74.93",
+      "normal": "0 1 0"
+    }
+  ]
+}
