@@ -1,0 +1,50 @@
+{
+  "_comment": "Example custom POI set for the Maah Daah Hey 100 race-day mockup. Loaded into the embedded map via embed.js data-pois. Same fields and coordinate space as the default pois.json.",
+  "pois": [
+    {
+      "id": "registration",
+      "title": "Race Registration",
+      "image": "img/poi/mdh-registration.jpg",
+      "description": "Check in here on race morning to grab your bib, timing chip, and packet before the start. Day-of registration and last-minute questions are handled at this tent — arrive early and give yourself time to roll to the start line.",
+      "cta": { "label": "Register", "url": "https://runsignup.com/Race/Events/ND/Medora/MAAHDAAHHEY100" },
+      "position": "-31.89 1.35 -75.15",
+      "normal": "0.000 1.000 0.000"
+    },
+    {
+      "id": "finish",
+      "title": "Finish Line",
+      "image": "img/poi/mdh-finish.jpg",
+      "description": "The finish, where up to 107 miles of Maah Daah Hey singletrack finally come to an end. Cheer riders across the line, grab a photo under the banner, and soak in the relief and the Badlands views.",
+      "cta": { "label": "Race details", "url": "https://medora.com/maahdaahhey100/" },
+      "position": "-54.49 1.36 -66.12",
+      "normal": "0.000 1.000 0.000"
+    },
+    {
+      "id": "medal",
+      "title": "Medal Ceremony",
+      "image": "img/poi/mdh-medal.jpg",
+      "description": "Awards and finisher medals for every distance are handed out here after the race. Gather to celebrate every finisher, cheer on the podium, and trade trail stories from the day.",
+      "cta": null,
+      "position": "-26.10 1.34 -66.05",
+      "normal": "0.000 1.000 0.000"
+    },
+    {
+      "id": "store",
+      "title": "Store",
+      "image": "img/poi/mdh-store.jpg",
+      "description": "The race store — jerseys, caps, and Maah Daah Hey 100 gear to remember the ride. Stop in before the start or after you cross the line.",
+      "cta": null,
+      "position": "-26.34 1.67 -75.13",
+      "normal": "-0.785 -0.000 -0.619"
+    },
+    {
+      "id": "beverage",
+      "title": "Beverage Sales",
+      "image": "img/poi/mdh-beverage.jpg",
+      "description": "Food and cold drinks to refuel between the action, with a place to sit and watch the trail. A welcome stop for riders and spectators alike.",
+      "cta": null,
+      "position": "-35.43 1.33 -49.41",
+      "normal": "0.000 1.000 0.000"
+    }
+  ]
+}

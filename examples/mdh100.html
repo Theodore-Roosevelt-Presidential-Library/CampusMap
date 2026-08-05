@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Maah Daah Hey 100 — Race-Day Map</title>
+<style>
+  @font-face{font-family:'Dharma Gothic E';src:url('https://www.trlibrary.com/themes/custom/trpl/css/dharma_type-dharmagothice-exbold.woff2') format('woff2');font-weight:800;font-display:swap;}
+  @font-face{font-family:'Clearface';src:url('https://www.trlibrary.com/themes/custom/trpl/css/clearfacestd-regular.woff2') format('woff2');font-weight:400;font-display:swap;}
+  @font-face{font-family:'Frutiger';src:url('https://www.trlibrary.com/themes/custom/trpl/css/frutigerltstd-regular.woff2') format('woff2');font-weight:400;font-display:swap;}
+  @font-face{font-family:'Frutiger';src:url('https://www.trlibrary.com/themes/custom/trpl/css/frutigerltstd-bold.woff2') format('woff2');font-weight:700;font-display:swap;}
+  :root{ --dark:#25282a; --sand:#d1ccbd; --orange:#e7805d; --line:#c4bfb2; }
+  *{box-sizing:border-box;}
+  body{ margin:0; background:var(--sand); color:var(--dark);
+    font-family:'Frutiger',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif; }
+  .wrap{ max-width:1040px; margin:0 auto; padding:0 20px; }
+  header{ background:var(--dark); color:#fff; }
+  header .wrap{ padding:26px 20px; display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; }
+  header .eyebrow{ font-weight:700; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--orange); }
+  h1{ font-family:'Dharma Gothic E',Impact,sans-serif; font-weight:800; text-transform:uppercase;
+    letter-spacing:.02em; font-size:clamp(38px,7vw,72px); line-height:.95; margin:10px 0 4px; }
+  .meta{ font-weight:700; font-size:14px; letter-spacing:.02em; }
+  .intro{ font-family:'Clearface',Georgia,serif; font-size:19px; line-height:1.5; margin:28px 0 8px; max-width:680px; }
+  h2{ font-family:'Dharma Gothic E',Impact,sans-serif; font-weight:800; text-transform:uppercase; letter-spacing:.02em; font-size:26px; margin:34px 0 6px; }
+  .hint{ font-size:14px; color:#5c5f63; margin:0 0 16px; }
+  .mapframe{ background:#fff; border:1px solid var(--line); border-radius:2px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,.06); }
+  footer{ font-size:13px; color:#5c5f63; padding:26px 0 46px; }
+  footer a{ color:var(--dark); }
+</style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Theodore Roosevelt Presidential Library · Medora, ND</div>
+        <h1>Maah Daah Hey 100</h1>
+        <div class="meta">MTB Race · Saturday, August 1, 2026</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <p class="intro">Up to 107 miles of North Dakota Badlands singletrack, starting and finishing at the Library grounds. Use the map to find registration, the finish line, the store, and everything else you'll need on race day.</p>
+
+    <h2>Race-day map</h2>
+    <p class="hint">Click a marker for details. Drag to look around, scroll to zoom.</p>
+    <div class="mapframe">
+      <!-- Embeds the TRPL campus map with a custom, race-specific POI set -->
+      <script src="/embed.js" data-pois="examples/mdh100-pois.json" data-height="620"></script>
+    </div>
+
+    <footer>
+      Map by the Theodore Roosevelt Presidential Library · <a href="https://campus.labs.trlibrary.com">campus.labs.trlibrary.com</a><br>
+      Mockup demonstrating a custom point-of-interest set on the embedded 3D campus map.
+    </footer>
+  </div>
+</body>
+</html>

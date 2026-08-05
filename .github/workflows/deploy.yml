@@ -33,6 +33,7 @@ jobs:
           cp TRPL_campus_web.glb _site/
           cp CNAME _site/
           cp -r img _site/
+          cp -r examples _site/
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload site artifact
