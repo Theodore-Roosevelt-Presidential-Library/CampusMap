@@ -67,7 +67,7 @@ The viewer can be dropped into any web page. Frame the view you want, click **Em
 <script src="https://campus.labs.trlibrary.com/embed.js" data-view="VIEW_TOKEN" data-height="600"></script>
 ```
 
-`embed.js` inserts a responsive, full-screen-capable iframe in place of the script tag. `data-view` is optional — omit it to open the default view; `data-height` and `data-width` are also optional (px or any CSS length).
+`embed.js` inserts a responsive, full-screen-capable iframe in place of the script tag. `data-view` is optional — omit it to open the default view. `data-height` accepts a number (px, default 600), any CSS length (`80vh`, `calc(100vh - 120px)`), `100%` (fills the container **if the container has its own height**), or **`fill`** — which dynamically fills the visible area below the map and tracks window resizes (the simplest way to make it full-screen). `data-width` defaults to `100%`.
 
 ### Custom points of interest in an embed
 
