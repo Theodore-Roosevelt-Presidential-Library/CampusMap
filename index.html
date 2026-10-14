@@ -32,7 +32,8 @@
   * { box-sizing:border-box; }
   html,body { margin:0; height:100%; background:#ffffff; color:var(--text); font-family:var(--font-ui); overflow:hidden; }
   .stage { position:relative; width:100%; height:100%; overflow:hidden; }   /* clip the off-screen (closed) panel */
-  model-viewer { width:100%; height:100%; background:#ffffff; --poster-color:#ffffff; cursor:crosshair;
+  model-viewer { position:relative; z-index:0; isolation:isolate;   /* keep the 3D canvas and its markers below the page controls (Safari) */
+    width:100%; height:100%; background:#ffffff; --poster-color:#ffffff; cursor:crosshair;
     --min-hotspot-opacity:1; }   /* disable model-viewer's facing dim; occlusion handled by heightfield */
   model-viewer.dragging { cursor:grabbing; }
   model-viewer::part(default-progress-bar) { display:none; }
@@ -215,7 +216,7 @@
   /* Loading: a still of the opening view appears at once (img/loading-*.webp, ~25 KB), softly washed out,
      with the progress bar over it; it fades as the live model takes over. */
   .loading { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center;
-    justify-content:center; gap:14px; pointer-events:none; background:#fff; transition:opacity .6s ease; z-index:8; }
+    justify-content:center; gap:14px; pointer-events:none; background:#fff; transition:opacity .6s ease; }   /* no z-index: the buttons that follow it in the page stay on top */
   .loading.done { opacity:0; }
   .loading picture, .loading picture img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:44% 38%; }
   .loading .card { margin-top:22vh; }   /* sit below the building in the still */
