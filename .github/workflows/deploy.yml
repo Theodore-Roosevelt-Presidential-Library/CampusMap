@@ -30,6 +30,7 @@ jobs:
           cp editor.html _site/
           cp embed.js _site/
           cp pois.json _site/
+          cp interior.json _site/
           cp heightfield.json _site/
           cp TRPL_campus_web.glb _site/
           cp CNAME _site/
