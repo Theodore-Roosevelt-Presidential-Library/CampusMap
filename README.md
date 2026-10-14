@@ -12,9 +12,11 @@ Live site: **https://campus.labs.trlibrary.com**
 | `editor.html` | Visual POI editor — right-click to place markers, edit details, download `pois.json` |
 | `embed.js` | Embed loader — inserts the map into any page and passes the view/POIs through |
 | `pois.json` | Points of interest — pin coordinates + panel content (title, image, description, CTA) |
+| `interior.json` | Inside the Library — interior stops (galleries, narrative galleries, public spaces) and visitor-information markers |
 | `heightfield.json` | Precomputed terrain/building height map used to hide markers blocked from view |
 | `TRPL_campus_web.glb` | Web-optimized campus model — Draco-compressed, GPU-instanced (7.7 MB) |
-| `img/` | Logo (`TRPL_Wordmark_Black_RGB.svg`) and POI images (`img/poi/`) |
+| `img/` | Logo (`TRPL_Wordmark_Black_RGB.svg`), POI images (`img/poi/`) and gallery photos (`img/poi/inside/`, from trlibrary.com) |
+| `tools/interior/` | Scripts and data used to build the interior and exterior details (reference only) |
 | `examples/` | Example host pages, e.g. the Maah Daah Hey 100 race-day mockup with a custom POI set |
 | `CNAME` | Custom domain for GitHub Pages |
 | `.github/workflows/deploy.yml` | Builds & deploys the site to GitHub Pages on every push to `main` |
@@ -32,6 +34,36 @@ Live site: **https://campus.labs.trlibrary.com**
 - Shareable views: camera angle, zoom, target, and open POI are encoded in a short `?v=` URL token, updated live in the address bar
 - Embeddable into any web page (see Embedding below), preserving the starting view
 - Responsive: starting distance adapts to the viewport; works on touch devices
+
+## Inside the Library
+
+**Step inside** (top center) lifts the roof and shows the Library's public spaces. Private areas (offices, security, IT, mechanical, storage, back of house) are drawn as solid blocks, the same way the exhibit map on [trlibrary.com/visit/maps](https://www.trlibrary.com/visit/maps) treats them.
+
+- **Floors:** *Main floor* (galleries 1–28, Narrative Galleries A–D, lobby, Exhibit & Event Gallery, store, Salt+Scoria, lockers, auditorium, East Wing lobby, classrooms) and *Upper floor* (East Wing: Executive Board Room and the upstairs reception).
+- **Stops:** numbered and lettered markers match the printed exhibit map. Each opens the side panel with a photo, a short description and a link to that gallery's section of the [exhibit guide](https://www.trlibrary.com/visit/exhibits/main). The content is in **`interior.json`**: edit text, images (`img/poi/inside/`) and links there.
+- **Visitor information layers** (layers button, lower right): recommended route, restrooms and services, accessibility and elevators, and flashing-light alerts.
+- **Deep links:** `?stop=in-the-arena` opens inside, on that stop. `?inside=1` or `?inside=2` opens on a floor. The shareable `?v=` token now also records inside/outside, the floor and the open interior stop, and older tokens still work.
+- **Embeds:** `data-stop="museum-store"` or `data-inside="2"` on the `embed.js` script tag. Host pages can also `postMessage({type:'trpl:focus', id:'legacy'})` or `{type:'trpl:mode', inside:true, level:2}`.
+- **Authoring:** with `?edit`, right-clicking while inside gives an interior-ready JSON snippet (it includes `level` and `kind`).
+
+**How it was built.** The interior is part of `TRPL_campus_web.glb`, in the nodes `INT_L1`, `INT_L2` and `INT_ROUTE`, which the page shows or hides. The steps:
+1. Walls came from the conformed sheets A201 and A202 (BIM 360 archive, Nov 2024 conformed set) as vector line work. They were registered to the campus model through the frame used by LBCSystems.
+2. Rooms were split by their tags. Public versus private and the gallery numbering follow the published exhibit map, which was registered to the same frame.
+3. The route follows the exhibit map's dotted route.
+4. The scripts and intermediate data are in `tools/interior/`, for reference. They need the archive PDFs, which are not in this repo.
+
+**Exterior details added from the drawings:**
+- The People's Library and Main Lobby curtain wall on the north and east (A321).
+- The auditorium stage window and the East Wing's northwest glazing (A320 CW13).
+- The permanent-exhibit bay window on the north wall (A303).
+- The West Patio alcove beside the roof stair, with its timber back wall and vestibule doors (A275).
+
+These sit on the model's simplified facades, so they show where the features are; they are not exact-size.
+
+**Known approximations:**
+- The upper floor is placed from A202 and nudged about 5 ft east to sit inside the model's East Wing.
+- Gallery partitions come from the architectural plan, so exhibit casework is not shown.
+- Marker positions come from the published exhibit map.
 
 ## Points of interest (POIs)
 

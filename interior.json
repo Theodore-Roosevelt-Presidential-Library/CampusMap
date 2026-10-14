@@ -1,0 +1,754 @@
+{
+  "_comment": "Inside the Library: interior stops and visitor-information markers for the campus map's Step Inside mode. Gallery numbering, names and route follow the exhibit map at trlibrary.com/visit/maps; descriptions are condensed from trlibrary.com/visit/exhibits/main. level 1 = main floor, 2 = East Wing upper floor. Positions are 'x y z' on the campus model (add ?edit&inside to the viewer URL and right-click to grab new ones).",
+  "stops": [
+    {
+      "id": "call-to-adventure",
+      "label": "1",
+      "kind": "gallery",
+      "level": 1,
+      "title": "A Call to Adventure",
+      "image": "img/poi/inside/call-to-adventure.jpg",
+      "description": "The journey starts on a New York City sidewalk outside the brownstone where Theodore Roosevelt was born. Meet him as a small, asthmatic boy who traveled the world through books, while the stories he read play out in the windows above.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-call-to-adventure"
+      },
+      "position": "-29.635 1.179 -78.412"
+    },
+    {
+      "id": "parlor",
+      "label": "2",
+      "kind": "gallery",
+      "level": 1,
+      "title": "Roosevelt Family Parlor",
+      "image": "img/poi/inside/parlor.jpg",
+      "description": "Step into the warm hush of a Victorian parlor, the room where young Theodore's character took shape. Meet the parents who gave him a sense of duty and a sense of wonder, and look for the family Bible given to his father by the newsboys he helped.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-parlor"
+      },
+      "position": "-29.963 1.179 -78.645"
+    },
+    {
+      "id": "museum-of-natural-history",
+      "label": "3",
+      "kind": "gallery",
+      "level": 1,
+      "title": "Roosevelt Museum of Natural History",
+      "image": "img/poi/inside/museum-of-natural-history.jpg",
+      "description": "At nine, Theodore turned his bedroom into a natural history museum. This gallery reimagines it as part bedroom, part daydream. Use your Trailblazer Compass to find animals hidden among the specimens and watch them spring to life.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-museum-of-natural-history"
+      },
+      "position": "-30.467 1.179 -79.181"
+    },
+    {
+      "id": "memory-train",
+      "label": "4",
+      "kind": "gallery",
+      "level": 1,
+      "title": "Memory Train",
+      "image": "img/poi/inside/memory-train.jpg",
+      "description": "Ride a train car through the happiest years of Roosevelt's young life: his courtship of Alice Hathaway Lee, their marriage and his first election. Lean in close to the wallpaper and you'll find fragments of real love letters.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-memory-train"
+      },
+      "position": "-32.147 1.179 -80.078"
+    },
+    {
+      "id": "loss",
+      "label": "5",
+      "kind": "gallery",
+      "level": 1,
+      "title": "Loss",
+      "image": "img/poi/inside/loss.jpg",
+      "description": "On February 14, 1884, Roosevelt lost his wife and his mother within hours of each other. His diary is here, open to the page where he marked that day with a heavy black X. Stand with it a moment, then follow him west to the Badlands.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-loss"
+      },
+      "position": "-32.584 1.179 -80.758"
+    },
+    {
+      "id": "elkhorn-ranch",
+      "label": "6",
+      "kind": "gallery",
+      "level": 1,
+      "title": "Elkhorn Ranch",
+      "image": "img/poi/inside/elkhorn-ranch.jpg",
+      "description": "In the Dakota Badlands, a grieving young man rebuilt his life and began his evolution into a conservationist. See his buckskin hunting outfit, his Tiffany hunting knife and branding irons from the Maltese Cross and Elkhorn ranches, and watch the conservation film at the heart of the gallery.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-elkhorn-ranch"
+      },
+      "position": "-31.775 1.179 -81.840"
+    },
+    {
+      "id": "storytelling-campfire",
+      "label": "7",
+      "kind": "gallery",
+      "level": 1,
+      "title": "Storytelling Campfire",
+      "image": "img/poi/inside/storytelling-campfire.jpg",
+      "description": "Pull up a rocking chair by a nighttime campfire in Medora. Roosevelt's real Badlands companions, including Joe Ferris, Bill Sewall and Bill Merrifield, swap stories of their adventures on the northern plains.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-storytelling-campfire"
+      },
+      "position": "-31.314 1.179 -81.483"
+    },
+    {
+      "id": "ranch-activities",
+      "label": "8",
+      "kind": "gallery",
+      "level": 1,
+      "title": "Ranch Activities",
+      "image": "img/poi/inside/ranch-activities.jpg",
+      "description": "Now try your hand at ranch life. Test your aim at target practice, design your own cattle brand, join the roundup and step up to deliver part of one of Roosevelt's early speeches.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-ranch-activities"
+      },
+      "position": "-31.848 1.179 -80.374"
+    },
+    {
+      "id": "assembling-the-rough-riders",
+      "label": "9",
+      "kind": "gallery",
+      "level": 1,
+      "title": "Assembling the Rough Riders",
+      "image": "",
+      "description": "When war broke out in 1898, Roosevelt resigned as Assistant Secretary of the Navy to fight. He helped raise a volunteer cavalry regiment that brought cowboys and ranch hands together with Ivy League athletes, lawmen and frontiersmen. The press called them the Rough Riders.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-setup-for-war"
+      },
+      "position": "-29.627 1.179 -80.477"
+    },
+    {
+      "id": "pre-battle-camp",
+      "label": "10",
+      "kind": "gallery",
+      "level": 1,
+      "title": "Pre-Battle Camp",
+      "image": "img/poi/inside/pre-battle-camp.jpg",
+      "description": "Step into Roosevelt's tent on the eve of battle. Inside is the Rough Riders uniform Brooks Brothers tailored for him, shown with his sword, campaign hat and spurs, along with a watercolor painted in the encampment.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-setup-for-war"
+      },
+      "position": "-29.911 1.179 -79.899"
+    },
+    {
+      "id": "san-juan-heights",
+      "label": "11",
+      "kind": "gallery",
+      "level": 1,
+      "title": "Battle of San Juan Heights",
+      "image": "img/poi/inside/san-juan-heights.jpg",
+      "description": "In this immersive theater, the July 1898 assault on the San Juan Heights unfolds around you through the voices of the men who were there. Roosevelt leads from the front, and a colonel of volunteers becomes a national figure overnight.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-san-juan-heights"
+      },
+      "position": "-29.394 1.179 -79.499"
+    },
+    {
+      "id": "post-battle",
+      "label": "12",
+      "kind": "gallery",
+      "level": 1,
+      "title": "Post-Battle Outcomes",
+      "image": "img/poi/inside/post-battle.jpg",
+      "description": "Roosevelt came home from Cuba a celebrity, and his Rough Riders became a sensation. A case full of Rough Rider games, sheet music and souvenirs shows that fame at work. Pose for a photo with the regiment at the top of the hill.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-post-battle"
+      },
+      "position": "-28.997 1.179 -79.937"
+    },
+    {
+      "id": "path-to-the-presidency",
+      "label": "13",
+      "kind": "gallery",
+      "level": 1,
+      "title": "Path to the Presidency",
+      "image": "img/poi/inside/path-to-the-presidency.jpg",
+      "description": "In barely three years, Roosevelt went from war hero to Governor of New York to vice president. Walk the campaign hall, and look for his \"TR for Governor\" ribbons and his 1899 speech \"The Strenuous Life.\"",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-governorship"
+      },
+      "position": "-28.496 1.179 -80.398"
+    },
+    {
+      "id": "vice-presidency",
+      "label": "14",
+      "kind": "gallery",
+      "level": 1,
+      "title": "Vice Presidency",
+      "image": "img/poi/inside/vice-presidency.jpg",
+      "description": "In 1900, Roosevelt crossed the country on a whistle-stop tour as William McKinley's running mate. Browse the campaign memorabilia, then build your own campaign poster and add it to the growing wall of candidates.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-vice-presidency"
+      },
+      "position": "-27.658 1.179 -81.480"
+    },
+    {
+      "id": "white-house-facade",
+      "label": "15",
+      "kind": "gallery",
+      "level": 1,
+      "title": "White House Facade",
+      "image": "img/poi/inside/white-house-facade.jpg",
+      "description": "A full-scale White House facade opens Roosevelt's presidency. A film narrated by Nick Offerman covers the eight years that remade the office, from the Square Deal to the Panama Canal and the Nobel Peace Prize.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-white-house-facade"
+      },
+      "position": "-28.850 1.179 -81.346"
+    },
+    {
+      "id": "conservation-bronze",
+      "label": "16",
+      "kind": "gallery",
+      "level": 1,
+      "title": "Conservation Bronze",
+      "image": "",
+      "description": "A stop dedicated to Roosevelt's conservation record. As president he protected roughly 230 million acres of public land, including national forests, bird reserves, national monuments and national parks.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-modern-presidency"
+      },
+      "position": "-29.364 1.179 -81.527"
+    },
+    {
+      "id": "roosevelts-white-house",
+      "label": "17",
+      "kind": "gallery",
+      "level": 1,
+      "title": "Roosevelt's White House",
+      "image": "img/poi/inside/roosevelts-white-house.jpg",
+      "description": "Meet the man inside the office. Photographs and personal objects from his presidential years fill the cases, including a ring holding a lock of Abraham Lincoln's hair. Then step into the role yourself: make the hard calls in Run Your Own Presidency and pose for your own presidential portrait.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-trs-white-house"
+      },
+      "position": "-30.056 1.179 -82.259"
+    },
+    {
+      "id": "talk-with-tr",
+      "label": "18",
+      "kind": "gallery",
+      "level": 1,
+      "title": "Talk with TR",
+      "image": "img/poi/inside/talk-with-tr.jpg",
+      "description": "Ask Theodore Roosevelt a question out loud, and a life-size, conversational TR answers with responses drawn from what he actually wrote and said. The Lincoln portrait he kept in his own White House office hangs nearby.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-talk-with-the-president"
+      },
+      "position": "-30.504 1.179 -82.607"
+    },
+    {
+      "id": "white-house-gang",
+      "label": "19",
+      "kind": "gallery",
+      "level": 1,
+      "title": "White House Gang",
+      "image": "img/poi/inside/white-house-gang.jpg",
+      "description": "Roosevelt's children and their friends turned the executive mansion into a playground. Led by young Quentin, the White House Gang roller-skated through the halls and once smuggled a pony into the elevator. This gallery is a space to play.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-white-house-gang"
+      },
+      "position": "-31.313 1.179 -82.591"
+    },
+    {
+      "id": "family-room",
+      "label": "20",
+      "kind": "gallery",
+      "level": 1,
+      "title": "Roosevelt Family Room",
+      "image": "img/poi/inside/family-room.jpg",
+      "description": "With six children and a menagerie of pets, the White House became one of the liveliest family homes it has ever been. Meet Edith Roosevelt, who reshaped the role of First Lady, and Alice, the celebrity of her era.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-white-house-family-room"
+      },
+      "position": "-30.659 1.179 -83.597"
+    },
+    {
+      "id": "east-africa",
+      "label": "21",
+      "kind": "gallery",
+      "level": 1,
+      "title": "East Africa",
+      "image": "img/poi/inside/east-africa.jpg",
+      "description": "The day after leaving the White House, Roosevelt set off on a scientific expedition to Africa for the Smithsonian. The specimens on display came from that expedition and still carry their original field tags, signed in Roosevelt's own hand.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-african-expedition"
+      },
+      "position": "-29.394 1.179 -83.290"
+    },
+    {
+      "id": "in-the-arena",
+      "label": "22",
+      "kind": "gallery",
+      "level": 1,
+      "title": "In the Arena",
+      "image": "img/poi/inside/in-the-arena.jpg",
+      "description": "Roosevelt's most famous passage lights up line by line around a great circular sculpture as it is read aloud. The voices rotate through the day and include presidents, first ladies, historians, artists and a Roosevelt descendant. Then make your own pledge.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-in-the-arena"
+      },
+      "position": "-29.853 1.179 -84.070"
+    },
+    {
+      "id": "bull-moose",
+      "label": "23",
+      "kind": "gallery",
+      "level": 1,
+      "title": "Bull Moose Campaign",
+      "image": "img/poi/inside/bull-moose.jpg",
+      "description": "In 1912, Roosevelt was shot in the chest on his way to a campaign speech, and he gave the speech anyway. See the eyeglasses case and the folded speech that slowed the bullet. Then cast a ballot on the issues of 1912 in a period voting booth.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-bull-moose-campaign"
+      },
+      "position": "-29.276 1.179 -83.882"
+    },
+    {
+      "id": "the-amazon",
+      "label": "24",
+      "kind": "gallery",
+      "level": 1,
+      "title": "The Amazon",
+      "image": "",
+      "description": "An immersive film puts you in the boats with Roosevelt and his son Kermit as they trace the uncharted River of Doubt. It is the expedition that nearly killed him. Brazil later renamed the river the Rio Roosevelt.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-the-amazon"
+      },
+      "position": "-27.977 1.179 -82.949"
+    },
+    {
+      "id": "sagamore-hill",
+      "label": "25",
+      "kind": "gallery",
+      "level": 1,
+      "title": "Sagamore Hill",
+      "image": "img/poi/inside/sagamore-hill.jpg",
+      "description": "Step into the warm, crowded rooms of Roosevelt's beloved Long Island home, full of a lifetime of collecting. Look for the famous rhinoceros-foot inkwell, a souvenir of Africa he kept on his desk.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-sagamore-hill"
+      },
+      "position": "-28.304 1.179 -82.445"
+    },
+    {
+      "id": "january-6-1919",
+      "label": "26",
+      "kind": "gallery",
+      "level": 1,
+      "title": "January 6, 1919",
+      "image": "",
+      "description": "Theodore Roosevelt died in his sleep at Sagamore Hill on January 6, 1919, at the age of sixty. This quiet stop marks the end of a restless life.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-sagamore-hill"
+      },
+      "position": "-27.708 1.179 -82.098"
+    },
+    {
+      "id": "legacy",
+      "label": "27",
+      "kind": "gallery",
+      "level": 1,
+      "title": "Legacy",
+      "image": "img/poi/inside/legacy.jpg",
+      "description": "Each ring in a plank of copper beech from Sagamore Hill counts a year of American history. Nearby are two original Medals of Honor, earned by Theodore Roosevelt and his son Theodore Roosevelt Jr.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-legacy"
+      },
+      "position": "-27.248 1.179 -82.332"
+    },
+    {
+      "id": "peoples-library",
+      "label": "28",
+      "kind": "gallery",
+      "level": 1,
+      "title": "The People's Library",
+      "image": "img/poi/inside/peoples-library.jpg",
+      "description": "The final room looks out on Theodore Roosevelt National Park. Tap your Trailblazer Compass one last time to reveal your own constellation, a map of the choices you made along the way.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-legacy"
+      },
+      "position": "-26.136 1.179 -81.502"
+    },
+    {
+      "id": "young-adulthood",
+      "label": "A",
+      "kind": "narrative",
+      "level": 1,
+      "title": "Young Adulthood",
+      "image": "img/poi/inside/young-adulthood.jpg",
+      "description": "The first Narrative Gallery covers the decade that made the man: Harvard, the death of his father, his first book and his first seat in the New York State Assembly. His Harvard record and marriage certificate are among the objects on view.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-young-adulthood"
+      },
+      "position": "-31.310 1.179 -79.461"
+    },
+    {
+      "id": "political-education",
+      "label": "B",
+      "kind": "narrative",
+      "level": 1,
+      "title": "Political Education",
+      "image": "img/poi/inside/political-education.jpg",
+      "description": "Back from the Badlands, Roosevelt became one of the most fearless reformers in American government, first as a U.S. Civil Service Commissioner and then as New York City's police commissioner. A police helmet and badge from the force he remade are on view.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-political-rise"
+      },
+      "position": "-30.722 1.179 -80.248"
+    },
+    {
+      "id": "modern-presidency",
+      "label": "C",
+      "kind": "narrative",
+      "level": 1,
+      "title": "Modern Presidency",
+      "image": "img/poi/inside/modern-presidency.jpg",
+      "description": "In seven years, Roosevelt remade the presidency: the Square Deal, trust-busting, the 1902 coal strike settlement and roughly 230 million acres of protected public land. The gallery also takes an honest look at the contradictions in his record on race.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-modern-presidency"
+      },
+      "position": "-29.791 1.179 -81.495"
+    },
+    {
+      "id": "final-years",
+      "label": "D",
+      "kind": "narrative",
+      "level": 1,
+      "title": "Final Years",
+      "image": "",
+      "description": "After the presidency, Roosevelt never slowed down. He championed women's suffrage, argued for preparedness in the World War and saw all four of his sons go to serve. His youngest, Quentin, was killed in France in 1918.",
+      "cta": {
+        "label": "Read about this gallery",
+        "url": "https://www.trlibrary.com/visit/exhibits/main#gallery-final-years"
+      },
+      "position": "-28.619 1.179 -83.063"
+    },
+    {
+      "id": "main-lobby",
+      "label": "",
+      "kind": "space",
+      "level": 1,
+      "title": "Main Lobby",
+      "image": "",
+      "description": "The front door to the Library, with tickets and admissions. Wheelchairs are available on request here.",
+      "cta": {
+        "label": "Buy tickets",
+        "url": "https://www.trlibrary.com/tickets"
+      },
+      "position": "-26.536 1.179 -78.611"
+    },
+    {
+      "id": "orientation",
+      "label": "",
+      "kind": "space",
+      "level": 1,
+      "title": "Orientation",
+      "image": "",
+      "description": "The permanent exhibition starts here. Pick up your Trailblazer Compass, a wearable band that unlocks the interactives as you move through eight chapters of Roosevelt's life.",
+      "cta": {
+        "label": "Plan your visit",
+        "url": "https://www.trlibrary.com/visit/exhibits/main"
+      },
+      "position": "-29.069 1.179 -77.683"
+    },
+    {
+      "id": "exhibit-event-gallery",
+      "label": "",
+      "kind": "space",
+      "level": 1,
+      "title": "Exhibit & Event Gallery",
+      "image": "",
+      "description": "A flexible gallery off the Main Lobby for temporary exhibitions and events.",
+      "cta": {
+        "label": "See current exhibits",
+        "url": "https://www.trlibrary.com/visit/exhibits"
+      },
+      "position": "-27.900 1.179 -79.419"
+    },
+    {
+      "id": "museum-store",
+      "label": "",
+      "kind": "space",
+      "level": 1,
+      "title": "Museum Store",
+      "image": "",
+      "description": "Books on Roosevelt and conservation, Library-exclusive merchandise, family-friendly gifts and goods from regional artisans.",
+      "cta": {
+        "label": "Shop online",
+        "url": "https://shop.trlibrary.com"
+      },
+      "position": "-25.570 1.179 -79.614"
+    },
+    {
+      "id": "salt-scoria",
+      "label": "",
+      "kind": "space",
+      "level": 1,
+      "title": "Salt+Scoria Restaurant",
+      "image": "",
+      "description": "The Library's restaurant, with indoor seating and a terrace looking out over the Badlands.",
+      "cta": {
+        "label": "Where to eat",
+        "url": "https://www.trlibrary.com/visit/eat"
+      },
+      "position": "-29.515 1.179 -75.926"
+    },
+    {
+      "id": "lockers",
+      "label": "",
+      "kind": "space",
+      "level": 1,
+      "title": "Lockers",
+      "image": "",
+      "description": "Lockers for coats and bags, next to the restrooms off the Main Lobby.",
+      "cta": null,
+      "position": "-28.709 1.179 -76.887"
+    },
+    {
+      "id": "auditorium",
+      "label": "",
+      "kind": "space",
+      "level": 1,
+      "title": "Auditorium",
+      "image": "",
+      "description": "The East Wing's auditorium hosts lectures, films and community gatherings, and can be booked for private events.",
+      "cta": {
+        "label": "Host an event",
+        "url": "https://www.trlibrary.com/private-events"
+      },
+      "position": "-23.844 1.179 -77.054"
+    },
+    {
+      "id": "east-wing-lobby",
+      "label": "",
+      "kind": "space",
+      "level": 1,
+      "title": "East Wing Lobby",
+      "image": "",
+      "description": "Gathering space for the auditorium and classrooms, with coat check, restrooms and the elevator to the upper floor.",
+      "cta": null,
+      "position": "-25.151 1.179 -76.161"
+    },
+    {
+      "id": "north-classroom",
+      "label": "",
+      "kind": "space",
+      "level": 1,
+      "title": "North Classroom",
+      "image": "",
+      "description": "One of two classrooms for school groups, workshops and meetings.",
+      "cta": {
+        "label": "For educators",
+        "url": "https://www.trlibrary.com/tr/for-educators"
+      },
+      "position": "-26.149 1.179 -75.536"
+    },
+    {
+      "id": "south-classroom",
+      "label": "",
+      "kind": "space",
+      "level": 1,
+      "title": "South Classroom",
+      "image": "",
+      "description": "One of two classrooms for school groups, workshops and meetings.",
+      "cta": {
+        "label": "For educators",
+        "url": "https://www.trlibrary.com/tr/for-educators"
+      },
+      "position": "-26.554 1.179 -74.980"
+    },
+    {
+      "id": "board-room",
+      "label": "",
+      "kind": "space",
+      "level": 2,
+      "title": "Executive Board Room",
+      "image": "",
+      "description": "The upper-floor board room in the East Wing, available for meetings and private events.",
+      "cta": {
+        "label": "Host an event",
+        "url": "https://www.trlibrary.com/private-events"
+      },
+      "position": "-26.580 1.659 -74.613"
+    },
+    {
+      "id": "upper-reception",
+      "label": "",
+      "kind": "space",
+      "level": 2,
+      "title": "Upper Floor Reception",
+      "image": "",
+      "description": "Arrival area at the top of the East Wing elevator and stairs.",
+      "cta": null,
+      "position": "-25.250 1.659 -76.744"
+    }
+  ],
+  "markers": [
+    {
+      "kind": "restroom",
+      "layer": "amenities",
+      "level": 1,
+      "label": "Restrooms",
+      "position": "-30.820 1.179 -82.250"
+    },
+    {
+      "kind": "restroom",
+      "layer": "amenities",
+      "level": 1,
+      "label": "Restrooms",
+      "position": "-29.594 1.179 -76.992"
+    },
+    {
+      "kind": "restroom",
+      "layer": "amenities",
+      "level": 1,
+      "label": "Restrooms",
+      "position": "-24.807 1.179 -74.765"
+    },
+    {
+      "kind": "family",
+      "layer": "amenities",
+      "level": 1,
+      "label": "Family restroom",
+      "position": "-29.148 1.179 -76.418"
+    },
+    {
+      "kind": "family",
+      "layer": "amenities",
+      "level": 1,
+      "label": "Family restroom",
+      "position": "-25.495 1.179 -74.936"
+    },
+    {
+      "kind": "wheelchair",
+      "layer": "access",
+      "level": 1,
+      "label": "Wheelchairs available on request",
+      "position": "-27.470 1.179 -77.729"
+    },
+    {
+      "kind": "access",
+      "layer": "access",
+      "level": 1,
+      "label": "Accessible seating",
+      "position": "-24.745 1.179 -77.586"
+    },
+    {
+      "kind": "access",
+      "layer": "access",
+      "level": 1,
+      "label": "Accessible seating",
+      "position": "-24.766 1.179 -76.505"
+    },
+    {
+      "kind": "elevator",
+      "layer": "access",
+      "level": 1,
+      "label": "Elevator to upper floor",
+      "position": "-24.868 1.179 -76.698"
+    },
+    {
+      "kind": "stairs",
+      "layer": "access",
+      "level": 1,
+      "label": "Stairs",
+      "position": "-25.247 1.179 -76.940"
+    },
+    {
+      "kind": "stairs",
+      "layer": "access",
+      "level": 1,
+      "label": "Stairs",
+      "position": "-24.382 1.179 -75.834"
+    },
+    {
+      "kind": "tickets",
+      "layer": "amenities",
+      "level": 1,
+      "label": "Tickets and admissions",
+      "position": "-27.331 1.179 -77.942"
+    },
+    {
+      "kind": "coat",
+      "layer": "amenities",
+      "level": 1,
+      "label": "Coat check",
+      "position": "-25.052 1.179 -75.556"
+    },
+    {
+      "kind": "warning",
+      "layer": "warnings",
+      "level": 1,
+      "label": "Contains flashing, strobing or high-contrast light",
+      "position": "-27.541 1.179 -82.518"
+    },
+    {
+      "kind": "warning",
+      "layer": "warnings",
+      "level": 1,
+      "label": "Contains flashing, strobing or high-contrast light",
+      "position": "-29.380 1.179 -78.991"
+    },
+    {
+      "kind": "exit",
+      "layer": "route",
+      "level": 1,
+      "label": "Early exit to the lobby",
+      "position": "-28.578 1.179 -82.658"
+    },
+    {
+      "kind": "entrance",
+      "layer": "amenities",
+      "level": 1,
+      "label": "West Wing entrance and exit",
+      "position": "-27.100 1.179 -76.210"
+    },
+    {
+      "kind": "entrance",
+      "layer": "amenities",
+      "level": 1,
+      "label": "East Wing entrance and exit",
+      "position": "-26.280 1.179 -77.046"
+    },
+    {
+      "kind": "elevator",
+      "layer": "access",
+      "level": 2,
+      "label": "Elevator",
+      "position": "-24.715 1.659 -76.497"
+    },
+    {
+      "kind": "stairs",
+      "layer": "access",
+      "level": 2,
+      "label": "Stairs",
+      "position": "-25.578 1.659 -75.945"
+    }
+  ]
+}

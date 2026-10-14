@@ -136,6 +136,77 @@
   .embed-card .x { position:absolute; top:14px; right:14px; width:30px; height:30px; border:1px solid var(--line);
     background:#fff; border-radius:2px; cursor:pointer; font-size:17px; color:var(--text); }
 
+  /* ---------- Inside the Library ---------- */
+  :root { --navy:#1f3552; --rest:#e07a3f; }
+  .modebar { position:absolute; top:20px; left:50%; transform:translateX(-50%); z-index:6;
+    display:flex; gap:8px; align-items:center; flex-wrap:wrap; justify-content:center; max-width:calc(100vw - 140px); }
+  .seg { display:flex; background:rgba(255,255,255,.95); border:1px solid var(--line); border-radius:2px;
+    box-shadow:0 1px 3px rgba(0,0,0,.08); overflow:hidden; }
+  .seg button { font-family:var(--font-ui); font-weight:700; font-size:13px; color:#54585d; background:transparent;
+    border:0; padding:10px 16px; cursor:pointer; min-height:40px; white-space:nowrap; }
+  .seg button + button { border-left:1px solid var(--line); }
+  .seg button[aria-pressed="true"] { background:var(--text); color:#fff; }
+  .seg button:not([aria-pressed="true"]):hover { color:var(--accent-dark); }
+  .seg button:focus-visible { outline:2px solid var(--accent); outline-offset:-2px; }
+  #floorSeg { display:none; }
+  .stage.inside #floorSeg { display:flex; }
+  .embedded .seg button { padding:8px 12px; font-size:12px; min-height:34px; }
+  @media (max-width:560px){ .modebar{ top:74px; max-width:calc(100vw - 32px); } .seg button{ padding:8px 11px; font-size:12px; } }
+
+  /* interior markers */
+  .ist, .imk { display:none; }
+  .stage.inside .ist.lv-cur, .stage.inside .imk.lv-cur { display:flex; }
+  .stage.inside .poi { display:none; }
+  .ist { align-items:center; justify-content:center; cursor:pointer; padding:0; border:0; background:none;
+    transition:transform .12s ease; font-family:var(--font-ui); }
+  .ist .dot { width:24px; height:24px; border-radius:50%; background:var(--navy); color:#fff; font-weight:700;
+    font-size:12px; line-height:24px; text-align:center; border:2px solid #fff; box-shadow:0 1px 3px rgba(0,0,0,.35); }
+  .ist.narrative .dot { background:#fff; color:var(--navy); border:2px solid var(--navy); }
+  .ist.space .dot { width:auto; height:auto; border-radius:2px; background:#fff; color:var(--navy); border:1.5px solid var(--navy);
+    font-family:var(--font-display); font-weight:700; font-size:12px; letter-spacing:.05em; line-height:1; padding:3px 6px 2px;
+    text-transform:uppercase; white-space:nowrap; }
+  .ist:hover, .ist.active { transform:scale(1.15); z-index:2; }
+  .ist.active .dot { box-shadow:0 0 0 3px var(--accent), 0 1px 3px rgba(0,0,0,.35); }
+  .ist .lbl { position:absolute; bottom:calc(100% + 7px); left:50%; transform:translateX(-50%); background:#2a2d31; color:#fff;
+    font-size:11px; white-space:nowrap; padding:3px 8px; border-radius:6px; opacity:0; pointer-events:none; transition:opacity .12s; }
+  .ist:hover .lbl { opacity:1; }
+  .ist.space .lbl { display:none; }
+  .imk { width:24px; height:24px; border-radius:50%; background:#fff; border:1.5px solid currentColor; color:var(--navy);
+    align-items:center; justify-content:center; box-shadow:0 1px 2px rgba(0,0,0,.25); padding:0; cursor:default; }
+  .imk svg { width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .imk.restroom, .imk.family { color:var(--rest); }
+  .imk.warning { color:#9a3412; border-radius:3px; transform:rotate(45deg); width:20px; height:20px; }
+  .imk.warning svg { transform:rotate(-45deg); }
+  .imk.exit { color:var(--rest); }
+  .imk .lbl { position:absolute; bottom:calc(100% + 7px); left:50%; transform:translateX(-50%); background:#2a2d31; color:#fff;
+    font-size:11px; font-family:var(--font-ui); white-space:nowrap; padding:3px 8px; border-radius:6px; opacity:0; pointer-events:none; transition:opacity .12s; }
+  .imk.warning .lbl { transform:translateX(-50%) rotate(-45deg); }
+  .imk:hover .lbl, .imk:focus .lbl { opacity:1; }
+  .stage.inside:not(.ly-amenities) .imk[data-layer="amenities"],
+  .stage.inside:not(.ly-access) .imk[data-layer="access"],
+  .stage.inside:not(.ly-warnings) .imk[data-layer="warnings"],
+  .stage.inside:not(.ly-route) .imk[data-layer="route"],
+  .stage.inside.poi-hidden .ist,
+  .stage.inside.far .ist.space, .stage.inside.far .imk { display:none; }
+  @media (max-width:600px){ .ist.space .dot{ font-size:11px; padding:3px 5px 2px; } .ist .dot{ width:22px; height:22px; line-height:22px; font-size:11px; } }
+
+  /* layers button + popover */
+  .zoom #layersBtn { display:none; }
+  .stage.inside .zoom #layersBtn { display:flex; }
+  .layers { position:absolute; right:74px; bottom:20px; z-index:7; width:250px; max-width:calc(100vw - 100px);
+    background:#fff; border:1px solid var(--line); border-radius:4px; box-shadow:0 8px 28px rgba(0,0,0,.18);
+    padding:14px 16px 10px; display:none; font-family:var(--font-ui); }
+  .layers.open { display:block; }
+  .layers h3 { font-family:var(--font-display); font-weight:800; text-transform:uppercase; letter-spacing:.03em; font-size:17px; margin:0 0 8px; }
+  .layers label { display:flex; align-items:center; gap:10px; font-size:13px; color:var(--text); padding:7px 0; cursor:pointer; }
+  .layers label input { width:16px; height:16px; accent-color:var(--text); margin:0; }
+  .layers .sw { width:22px; height:22px; flex:none; display:flex; align-items:center; justify-content:center; }
+  .layers .sw svg { width:18px; height:18px; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .layers .note { font-size:11px; line-height:1.4; color:#6b7075; margin:6px 0 2px; border-top:1px solid var(--line); padding-top:8px; }
+  .panel .pkick { font-family:var(--font-ui); font-weight:700; font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+    color:#6b7075; margin:0 0 6px; }
+  .panel .pkick:empty { display:none; }
+
   /* loading */
   .loading { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center;
     justify-content:center; gap:14px; pointer-events:none; }
@@ -173,7 +244,30 @@
     </div>
   </model-viewer>
 
+  <div class="modebar" id="modebar">
+    <div class="seg" role="group" aria-label="View">
+      <button id="btnOut" aria-pressed="true">Outside</button>
+      <button id="btnIn" aria-pressed="false">Step inside</button>
+    </div>
+    <div class="seg" id="floorSeg" role="group" aria-label="Floor">
+      <button id="btnL1" aria-pressed="true">Main floor</button>
+      <button id="btnL2" aria-pressed="false">Upper floor</button>
+    </div>
+  </div>
+
+  <div class="layers" id="layers" role="dialog" aria-label="Map layers">
+    <h3>Visitor information</h3>
+    <label><input type="checkbox" data-ly="route" checked><span class="sw" id="swRoute"></span>Recommended route</label>
+    <label><input type="checkbox" data-ly="amenities" checked><span class="sw" id="swAmen"></span>Restrooms &amp; services</label>
+    <label><input type="checkbox" data-ly="access" checked><span class="sw" id="swAccess"></span>Accessibility &amp; elevators</label>
+    <label><input type="checkbox" data-ly="warnings" checked><span class="sw" id="swWarn"></span>Flashing-light alerts</label>
+    <p class="note">Wheelchairs are available on request in the Main Lobby. Gallery layout follows the exhibit map at trlibrary.com/visit/maps.</p>
+  </div>
+
   <div class="zoom">
+    <button id="layersBtn" title="Visitor information layers" aria-label="Visitor information layers" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></svg>
+    </button>
     <button id="fs" title="Full screen" aria-label="Toggle full screen">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
     </button>
@@ -196,6 +290,7 @@
     <button class="close" id="panelClose" aria-label="Close">×</button>
     <img class="pimg" id="pImg" alt="" />
     <div class="pbody">
+      <p class="pkick" id="pKick"></p>
       <h2 class="ptitle" id="pTitle"></h2>
       <p class="pdesc" id="pDesc"></p>
       <a class="pcta" id="pCta" target="_blank" rel="noopener"></a>
@@ -212,7 +307,7 @@
     <div class="embed-card">
       <button class="x" id="embedClose" aria-label="Close">×</button>
       <h2>Embed this view</h2>
-      <p>Paste this into a web page. The current camera angle, zoom, and open point of interest are carried in the link, so it opens exactly where you are now.</p>
+      <p>Paste this into a web page. The current camera angle, zoom, open point of interest and inside/outside view are carried in the link, so it opens exactly where you are now.</p>
       <label>JavaScript embed</label>
       <textarea id="embedJs" readonly></textarea>
       <button class="copy" data-target="embedJs">Copy script</button>
@@ -222,6 +317,7 @@
 
 <script>
   const mv = document.getElementById('mv');
+  const stage = document.querySelector('.stage');
   const EMBEDDED = window.self !== window.top;
   if (EMBEDDED) document.documentElement.classList.add('embedded');   // compact chrome inside an iframe
   const fill = document.getElementById('fill');
@@ -248,11 +344,13 @@
   // ----- shareable URL state (compact permalink) -----
   let POIS = [];
   let currentPOI = null;
+  let STOPS = [], MARKERS = [], INSIDE = false, LEVEL = 1;   // Inside the Library (see interior.json)
   const params = new URLSearchParams(location.search);
   const EDIT = params.has('edit');
 
-  // Pack [theta, phi, radius, tx, ty, tz, poiIndex] as quantized base36, '-' delimited.
-  function encodeState(o, t, poiIdx){
+  // Pack [theta, phi, radius, tx, ty, tz, poiIndex, mode, stopIndex] as quantized base36, '-' delimited.
+  // mode: 0 outside, 1 inside main floor, 2 inside upper floor; stopIndex: open interior stop (1-based, 0 = none).
+  function encodeState(o, t, poiIdx, mode, stopIdx){
     let th = o.theta * 180 / Math.PI; th = ((th % 360) + 540) % 360 - 180;   // normalize to -180..180
     const q = [
       Math.round(th * 10) + 1800,
@@ -263,23 +361,27 @@
       Math.round((t.z + 250) * 10),
       poiIdx || 0
     ];
+    if (mode || stopIdx) q.push(mode || 0, stopIdx || 0);   // older 7-field tokens stay valid
     return q.map(n => Math.max(0, n).toString(36)).join('-');
   }
   function decodeState(s){
     const a = (s || '').split('-').map(x => parseInt(x, 36));
     if (a.length < 7 || a.some(n => Number.isNaN(n))) return null;
     return { theta:(a[0]-1800)/10, phi:a[1]/10, radius:a[2]/10,
-             tx:a[3]/10-250, ty:a[4]/10-50, tz:a[5]/10-250, poi:a[6] };
+             tx:a[3]/10-250, ty:a[4]/10-50, tz:a[5]/10-250, poi:a[6], mode:a[7] || 0, stop:a[8] || 0 };
   }
   const initial = params.has('v') ? decodeState(params.get('v')) : null;
 
   let urlTimer;
   function updateURL(){
     const o = mv.getCameraOrbit(), t = mv.getCameraTarget();
-    const idx = currentPOI ? (POIS.findIndex(p => p.id === currentPOI.id) + 1) : 0;
+    const ext = currentPOI && !currentPOI._inside;
+    const idx = ext ? (POIS.findIndex(p => p.id === currentPOI.id) + 1) : 0;
+    const sIdx = currentPOI && currentPOI._inside ? (STOPS.indexOf(currentPOI) + 1) : 0;
     const p = new URLSearchParams();
-    p.set('v', encodeState(o, t, idx));
+    p.set('v', encodeState(o, t, idx, INSIDE ? LEVEL : 0, sIdx));
     if (EDIT) p.set('edit', '');
+    if (params.get('pois')) p.set('pois', params.get('pois'));
     history.replaceState(null, '', location.pathname + '?' + p.toString());
   }
   function scheduleURL(){ clearTimeout(urlTimer); urlTimer = setTimeout(updateURL, 300); }
@@ -389,11 +491,13 @@
   const panel = document.getElementById('panel');
   const pImg = document.getElementById('pImg'), pTitle = document.getElementById('pTitle');
   const pDesc = document.getElementById('pDesc'), pCta = document.getElementById('pCta');
-  function clearActive(){ mv.querySelectorAll('.poi.active').forEach(n => n.classList.remove('active')); }
+  function clearActive(){ mv.querySelectorAll('.poi.active, .ist.active').forEach(n => n.classList.remove('active')); }
+  const pKick = document.getElementById('pKick');
   function openPanel(p, btn){
     clearActive(); if (btn) btn.classList.add('active');
     if (p.image){ pImg.src = p.image; pImg.style.display = 'block'; pImg.onerror = () => { pImg.style.display = 'none'; }; }
     else { pImg.removeAttribute('src'); pImg.style.display = 'none'; }
+    pKick.textContent = p._kicker || '';
     pTitle.textContent = p.title || '';
     pDesc.textContent = p.description || '';
     if (p.cta && p.cta.url){ pCta.textContent = p.cta.label || 'Learn more'; pCta.href = p.cta.url; pCta.style.display = 'inline-block'; }
@@ -408,7 +512,6 @@
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePanel(); });
 
   // Toggle POI markers on/off for a clean view.
-  const stage = document.querySelector('.stage');
   const poiToggle = document.getElementById('poiToggle');
   poiToggle.onclick = () => {
     const hidden = stage.classList.toggle('poi-hidden');
@@ -476,7 +579,10 @@
   window.addEventListener('message', (e) => {
     const d = e.data; if (!d) return;
     if (d.type === 'trpl:setPOIs' && Array.isArray(d.pois)) { closePanel(); loadPOIs(d.pois, false); }
+    else if (d.type === 'trpl:mode') { setMode(!!d.inside, d.level === 2 ? 2 : 1); }
+    else if (d.type === 'trpl:focus' && d.id && stopById(d.id)) { openStop(stopById(d.id), true); }
     else if (d.type === 'trpl:focus' && d.id) {
+      if (INSIDE) setMode(false, LEVEL, { keepCamera: true });
       const p = POIS.find(x => x.id === d.id);
       if (p) {
         const c = p.position.split(/\s+/).map(Number);
@@ -485,6 +591,167 @@
       }
     }
   });
+
+
+  // ---------- Inside the Library ----------
+  // The campus model carries the interior as extra nodes: INT_L1 (main floor), INT_L2 (East Wing upper floor)
+  // and INT_ROUTE (recommended exhibit route). Stepping inside hides the roof and building shell and shows them.
+  const NAVY = '#1f3552';
+  const IN_ICON = {
+    restroom:'<svg viewBox="0 0 24 24"><circle cx="8" cy="5" r="1.6"/><circle cx="16" cy="5" r="1.6"/><path d="M8 8v12M6 9h4v6H6zM16 8l-3 8h6l-3-8zM15 16v4M17 16v4"/></svg>',
+    family:'<svg viewBox="0 0 24 24"><circle cx="6" cy="5" r="1.5"/><circle cx="18" cy="5" r="1.5"/><circle cx="12" cy="10" r="1.2"/><path d="M6 8v12M4.5 9h3v6h-3zM18 8l-2.4 7h4.8L18 8zM17 15v5M19 15v5M12 12.5v7.5M10.8 13h2.4v4h-2.4z"/></svg>',
+    wheelchair:'<svg viewBox="0 0 24 24"><circle cx="11" cy="4" r="1.6"/><path d="M11 7v6h6l3 5M11 10h5"/><path d="M8.5 11.5a5 5 0 1 0 6.5 6"/></svg>',
+    access:'<svg viewBox="0 0 24 24"><circle cx="11" cy="4" r="1.6"/><path d="M11 7v6h6l3 5M11 10h5"/><path d="M8.5 11.5a5 5 0 1 0 6.5 6"/></svg>',
+    elevator:'<svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 10l3-3 3 3M9 14l3 3 3-3"/></svg>',
+    stairs:'<svg viewBox="0 0 24 24"><path d="M3 20h5v-5h5v-5h5V5h3"/></svg>',
+    tickets:'<svg viewBox="0 0 24 24"><path d="M3 7h18v3a2 2 0 0 0 0 4v3H3v-3a2 2 0 0 0 0-4z"/><path d="M14 7v10" stroke-dasharray="2 2"/></svg>',
+    coat:'<svg viewBox="0 0 24 24"><path d="M12 7a2 2 0 1 1 2-2M12 7v2L3 16h18l-9-7"/></svg>',
+    warning:'<svg viewBox="0 0 24 24"><path d="M12 6v8M12 18v.5"/></svg>',
+    exit:'<svg viewBox="0 0 24 24"><path d="M14 4H5v16h9M10 12h10M17 9l3 3-3 3"/></svg>',
+    entrance:'<svg viewBox="0 0 24 24"><path d="M10 4h9v16h-9M3 12h11M11 9l3 3-3 3"/></svg>',
+    route:'<svg viewBox="0 0 24 24"><path d="M3 12h3M9 12h3M15 12h2" stroke-dasharray="0"/><path d="M17 8l4 4-4 4"/></svg>',
+  };
+  [['swRoute','route',NAVY],['swAmen','restroom','#e07a3f'],['swAccess','wheelchair',NAVY],['swWarn','warning','#9a3412']]
+    .forEach(([id,k,c]) => { const el = document.getElementById(id); el.innerHTML = IN_ICON[k]; el.querySelector('svg').style.stroke = c; });
+
+  let SC = null, groups = null;
+  function threeScene(){
+    if (SC) return SC;
+    const sym = Object.getOwnPropertySymbols(mv).find(x => x.description === 'scene');
+    SC = sym ? mv[sym] : null; return SC;
+  }
+  function collectGroups(){
+    const sc = threeScene(); if (!sc) return null;
+    const by = n => sc.getObjectByName(n);
+    const shell = [];
+    const B = by('B_U_I_L_D_I_N_G'); if (B) shell.push(B);
+    const D = by('EXT_DETAILS'); if (D) shell.push(D);
+    sc.traverse(o => { if (o.isMesh && /^(simple_plant_0|TRI_brown|low_poly_(seated_)?people)/.test(o.name)) shell.push(o); });
+    return { shell, L1: by('INT_L1'), L2: by('INT_L2'), route: by('INT_ROUTE'), all: by('INTERIOR') };
+  }
+  const show = (obj, on) => { if (obj) obj.traverse(o => o.layers.set(on ? 0 : 1)); };
+  function applyVisibility(){
+    groups = groups || collectGroups(); if (!groups) return;
+    groups.shell.forEach(o => show(o, !INSIDE));
+    show(groups.L1, INSIDE);
+    show(groups.L2, INSIDE && LEVEL === 2);
+    show(groups.route, INSIDE && LEVEL === 1 && stage.classList.contains('ly-route'));
+    const sc = threeScene(); if (sc && sc.queueRender) sc.queueRender();
+  }
+
+  // Interior camera framing (model units; the campus model is roughly 1 unit = 33 ft)
+  const IN_VIEW = { 1: { target:[-27.5, 1.15, -78.6], phi:42, r:19 }, 2: { target:[-25.81, 1.63, -75.5], phi:46, r:11 } };
+  function frameInterior(level){
+    let v = IN_VIEW[level]; const o = mv.getCameraOrbit();
+    const a = (mv.clientWidth || innerWidth) / (mv.clientHeight || innerHeight);
+    if (level === 1 && a < 0.9) v = { target:[-29.18, 1.15, -80.61], phi:40, r:13 };   // phones: open on the galleries
+    const r = a < 0.9 ? v.r * 1.15 : v.r * Math.min(1.8, Math.max(1, REF_ASPECT / a));   // portrait screens: crop the sides rather than shrink everything
+    mv.cameraTarget = `${v.target[0]}m ${v.target[1]}m ${v.target[2]}m`;
+    mv.cameraOrbit = `${(o.theta*180/Math.PI).toFixed(1)}deg ${v.phi}deg ${r.toFixed(1)}m`;
+  }
+  function focusStop(p, r){
+    const c = p.position.split(/\s+/).map(Number), o = mv.getCameraOrbit();
+    mv.cameraTarget = `${c[0]}m ${c[1]}m ${c[2]}m`;
+    mv.cameraOrbit = `${(o.theta*180/Math.PI).toFixed(1)}deg ${Math.min(o.phi*180/Math.PI, 55).toFixed(1)}deg ${r || 9}m`;
+  }
+
+  const btnOut = document.getElementById('btnOut'), btnIn = document.getElementById('btnIn');
+  const btnL1 = document.getElementById('btnL1'), btnL2 = document.getElementById('btnL2');
+  function setMode(inside, level, opts = {}){
+    const wasInside = INSIDE, oldLevel = LEVEL;
+    INSIDE = !!inside; LEVEL = level === 2 ? 2 : 1;
+    stage.classList.toggle('inside', INSIDE);
+    btnOut.setAttribute('aria-pressed', String(!INSIDE)); btnIn.setAttribute('aria-pressed', String(INSIDE));
+    btnL1.setAttribute('aria-pressed', String(LEVEL === 1)); btnL2.setAttribute('aria-pressed', String(LEVEL === 2));
+    mv.querySelectorAll('.ist, .imk').forEach(n => n.classList.toggle('lv-cur', +n.dataset.level === LEVEL));
+    // let the camera get close to the galleries when inside
+    mv.minCameraOrbit = INSIDE ? 'auto 6deg 3m' : `auto 6deg ${MIN_R}m`;
+    applyVisibility();
+    if (currentPOI && (currentPOI._inside ? (!INSIDE || currentPOI.level !== LEVEL) : INSIDE)) closePanel();
+    if (!opts.keepCamera){
+      if (INSIDE && (!wasInside || oldLevel !== LEVEL)) frameInterior(LEVEL);
+      else if (!INSIDE && wasInside) { mv.cameraTarget = START_TARGET; const o = mv.getCameraOrbit();
+        mv.cameraOrbit = `${(o.theta*180/Math.PI).toFixed(1)}deg ${START_PHI} ${startRadius()}m`; }
+      userMoved = true;
+    }
+    updateURL();
+    if (EMBEDDED) parent.postMessage({ type: 'trpl:mode', inside: INSIDE, level: LEVEL }, '*');
+  }
+  btnOut.onclick = () => setMode(false, LEVEL);
+  btnIn.onclick  = () => setMode(true, LEVEL);
+  btnL1.onclick  = () => setMode(true, 1);
+  btnL2.onclick  = () => setMode(true, 2);
+
+  // When the building is small on screen, keep only the gallery numbers so markers don't pile up.
+  function updateDensity(){
+    if (!INSIDE) return;
+    const r = mv.getCameraOrbit().radius, h = mv.clientHeight || innerHeight;
+    stage.classList.toggle('far', 16 * h / (2 * r * Math.tan(15 * Math.PI / 180)) < 620);
+  }
+  mv.addEventListener('camera-change', updateDensity);
+
+  // layers
+  const layersEl = document.getElementById('layers'), layersBtn = document.getElementById('layersBtn');
+  layersBtn.onclick = (e) => { e.stopPropagation(); const o = layersEl.classList.toggle('open'); layersBtn.setAttribute('aria-expanded', String(o)); };
+  document.addEventListener('click', (e) => { if (!layersEl.contains(e.target) && e.target !== layersBtn) { layersEl.classList.remove('open'); layersBtn.setAttribute('aria-expanded','false'); } });
+  layersEl.querySelectorAll('input[data-ly]').forEach(cb => {
+    stage.classList.toggle('ly-' + cb.dataset.ly, cb.checked);
+    cb.onchange = () => { stage.classList.toggle('ly-' + cb.dataset.ly, cb.checked); applyVisibility(); };
+  });
+
+  function kickerFor(p){
+    const floor = p.level === 2 ? 'Upper floor' : 'Main floor';
+    if (p.kind === 'gallery') return `Experience Gallery ${p.label} · ${floor}`;
+    if (p.kind === 'narrative') return `Narrative Gallery ${p.label} · ${floor}`;
+    return `Inside the Library · ${floor}`;
+  }
+  function renderInterior(){
+    mv.querySelectorAll('[slot^="hotspot-in-"]').forEach(n => n.remove());
+    STOPS.forEach((p, i) => {
+      p._inside = true; p._kicker = kickerFor(p);
+      const b = document.createElement('button');
+      b.slot = 'hotspot-in-s' + i; b.className = 'ist ' + (p.kind || 'space');
+      b.dataset.position = p.position; b.dataset.normal = '0 1 0'; b.dataset.level = p.level || 1;
+      b.setAttribute('aria-label', (p.label ? p.label + '. ' : '') + p.title);
+      b.innerHTML = `<span class="dot">${esc(p.label || p.title)}</span>${p.label ? `<span class="lbl">${esc(p.title)}</span>` : ''}`;
+      b.addEventListener('click', (e) => { e.stopPropagation(); openPanel(p, b); });
+      mv.appendChild(b);
+    });
+    MARKERS.forEach((m, i) => {
+      const d = document.createElement('div');
+      d.slot = 'hotspot-in-m' + i; d.className = 'imk ' + m.kind; d.tabIndex = 0;
+      d.dataset.position = m.position; d.dataset.normal = '0 1 0'; d.dataset.level = m.level || 1; d.dataset.layer = m.layer;
+      d.setAttribute('role', 'img'); d.setAttribute('aria-label', m.label);
+      d.innerHTML = (IN_ICON[m.kind] || '') + `<span class="lbl">${esc(m.label)}</span>`;
+      mv.appendChild(d);
+    });
+    mv.querySelectorAll('.ist, .imk').forEach(n => n.classList.toggle('lv-cur', +n.dataset.level === LEVEL));
+  }
+  function stopById(id){ return STOPS.find(s => s.id === id); }
+  function openStop(p, move){
+    if (!INSIDE || LEVEL !== (p.level || 1)) setMode(true, p.level || 1, { keepCamera: true });
+    if (move) focusStop(p);
+    openPanel(p, mv.querySelector('[slot="hotspot-in-s' + STOPS.indexOf(p) + '"]'));
+  }
+
+  let modelReady = false, interiorReady = false;
+  function interiorStart(){
+    if (!modelReady || !interiorReady) return;
+    groups = null; applyVisibility();
+    const stopParam = params.get('stop'), insideParam = params.has('inside') || params.has('level');
+    const lvlParam = +(params.get('level') || params.get('inside') || 1) === 2 ? 2 : 1;
+    if (stopParam && stopById(stopParam)) { const p = stopById(stopParam); setMode(true, p.level, { keepCamera: !!initial }); openStop(p, !initial); }
+    else if (initial && initial.mode) {
+      setMode(true, initial.mode, { keepCamera: true });
+      if (initial.stop && STOPS[initial.stop - 1]) openStop(STOPS[initial.stop - 1], false);
+    }
+    else if (insideParam) setMode(true, lvlParam, { keepCamera: !!initial });
+  }
+  mv.addEventListener('load', () => { modelReady = true; groups = null; applyVisibility(); setTimeout(interiorStart, 260); });
+  fetch('interior.json', { cache: 'no-cache' })
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(d => { STOPS = d.stops || []; MARKERS = d.markers || []; renderInterior(); interiorReady = true; interiorStart(); })
+    .catch(() => { document.getElementById('modebar').style.display = 'none'; });
 
   // ---------- Coordinate picker (authoring: add ?edit to the URL) ----------
   const picker = document.getElementById('picker');
@@ -495,6 +762,7 @@
     if (!hit || !hit.position) return null;
     const p = hit.position.toString().replace(/m/g,'').trim().split(/\s+/).map(Number);
     const n = (hit.normal ? hit.normal.toString() : '0 1 0').replace(/m/g,'').trim().split(/\s+/).map(Number);
+    if (INSIDE) return { position: `${p[0].toFixed(2)} ${(p[1] + 0.03).toFixed(2)} ${p[2].toFixed(2)}`, normal: '0.000 1.000 0.000' };
     if (Math.abs(n[1] || 0) > 0.5) {                 // horizontal surface → seat on top, upright marker
       const top = (typeof hAt === 'function') ? hAt(p[0], p[2]) : -9999;
       const y = (top > -9000 ? Math.max(p[1], top) : p[1]) + 0.2;
@@ -511,7 +779,7 @@
     if (EMBEDDED) { parent.postMessage({ type: 'trpl:pick', position: seated.position, normal: seated.normal }, '*'); return; }
     const snippet =
 `{
-  "id": "new-poi",
+  "id": "new-poi",${INSIDE ? `\n  "label": "",\n  "kind": "space",\n  "level": ${LEVEL},` : ''}
   "title": "New POI",
   "image": "img/poi/new-poi.jpg",
   "description": "",
