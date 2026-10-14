@@ -329,7 +329,7 @@
       "kind": "gallery",
       "level": 1,
       "title": "The Amazon",
-      "image": "",
+      "image": "img/poi/inside/the-amazon.jpg",
       "description": "An immersive film puts you in the boats with Roosevelt and his son Kermit as they trace the uncharted River of Doubt. It is the expedition that nearly killed him. Brazil later renamed the river the Rio Roosevelt.",
       "cta": {
         "label": "Read about this gallery",
@@ -455,8 +455,8 @@
       "kind": "space",
       "level": 1,
       "title": "Main Lobby",
-      "image": "",
-      "description": "The front door to the Library, with tickets and admissions. Wheelchairs are available on request here.",
+      "image": "img/poi/inside/main-lobby.jpg",
+      "description": "The Library's front door, with tickets at the Welcome desk and rammed-earth walls made from Badlands soils. The main entrance is fully accessible, and a limited number of wheelchairs are available here on a first-come, first-served basis. Accessible restrooms are just off the lobby.",
       "cta": {
         "label": "Buy tickets",
         "url": "https://www.trlibrary.com/tickets"
@@ -469,7 +469,7 @@
       "kind": "space",
       "level": 1,
       "title": "Orientation",
-      "image": "",
+      "image": "img/poi/inside/orientation.jpg",
       "description": "The permanent exhibition starts here. Pick up your Trailblazer Compass, a wearable band that unlocks the interactives as you move through eight chapters of Roosevelt's life.",
       "cta": {
         "label": "Plan your visit",
@@ -484,7 +484,7 @@
       "level": 1,
       "title": "Exhibit & Event Gallery",
       "image": "",
-      "description": "A flexible gallery off the Main Lobby for temporary exhibitions and events.",
+      "description": "The Library's gallery for special exhibitions and events, just off the Main Lobby. Special exhibitions change through the year; see what's on now.",
       "cta": {
         "label": "See current exhibits",
         "url": "https://www.trlibrary.com/visit/exhibits"
@@ -497,8 +497,8 @@
       "kind": "space",
       "level": 1,
       "title": "Museum Store",
-      "image": "",
-      "description": "Books on Roosevelt and conservation, Library-exclusive merchandise, family-friendly gifts and goods from regional artisans.",
+      "image": "img/poi/inside/museum-store.jpg",
+      "description": "Curated books on Roosevelt, conservation and American history, Library-exclusive apparel and keepsakes, family-friendly toys and puzzles, and handcrafted goods from regional artisans. Can't carry it home? The full inventory is online.",
       "cta": {
         "label": "Shop online",
         "url": "https://shop.trlibrary.com"
@@ -511,8 +511,8 @@
       "kind": "space",
       "level": 1,
       "title": "Salt+Scoria Restaurant",
-      "image": "",
-      "description": "The Library's restaurant, with indoor seating and a terrace looking out over the Badlands.",
+      "image": "img/poi/inside/salt-scoria.jpg",
+      "description": "The restaurant inside the Library: wood-fired, native and seasonal. Salt is for saltbush, the hardy native plant; Scoria is the fire-formed red rock that colors the Badlands. Open year-round with hours that shift by season, and no Library admission ticket is needed to dine.",
       "cta": {
         "label": "Where to eat",
         "url": "https://www.trlibrary.com/visit/eat"
@@ -526,7 +526,7 @@
       "level": 1,
       "title": "Lockers",
       "image": "",
-      "description": "Lockers for coats and bags, next to the restrooms off the Main Lobby.",
+      "description": "Lockers for coats and bags sit beside the restrooms and family restroom off the Main Lobby, so you can explore the galleries hands-free.",
       "cta": null,
       "position": "-28.709 1.179 -76.887"
     },
@@ -536,13 +536,14 @@
       "kind": "space",
       "level": 1,
       "title": "Auditorium",
-      "image": "",
-      "description": "The East Wing's auditorium hosts lectures, films and community gatherings, and can be booked for private events.",
+      "image": "img/poi/inside/auditorium.jpg",
+      "description": "The East Wing auditorium faces a wall of glass onto the Badlands. It hosts lectures, films and community gatherings, and can be booked for conferences and private events.",
       "cta": {
         "label": "Host an event",
         "url": "https://www.trlibrary.com/private-events"
       },
-      "position": "-23.844 1.179 -77.054"
+      "position": "-23.844 1.179 -77.054",
+      "imageCaption": "Architectural rendering: Snøhetta / Plomp"
     },
     {
       "id": "east-wing-lobby",
@@ -550,10 +551,11 @@
       "kind": "space",
       "level": 1,
       "title": "East Wing Lobby",
-      "image": "",
-      "description": "Gathering space for the auditorium and classrooms, with coat check, restrooms and the elevator to the upper floor.",
+      "image": "img/poi/inside/east-wing-lobby.jpg",
+      "description": "The gathering space outside the auditorium and classrooms, with coat check, restrooms, and the elevator and stairs to the upper floor. It doubles as pre-function space for events.",
       "cta": null,
-      "position": "-25.151 1.179 -76.161"
+      "position": "-25.151 1.179 -76.161",
+      "imageCaption": "Architectural rendering: Snøhetta / Plomp"
     },
     {
       "id": "north-classroom",
@@ -561,13 +563,14 @@
       "kind": "space",
       "level": 1,
       "title": "North Classroom",
-      "image": "",
-      "description": "One of two classrooms for school groups, workshops and meetings.",
+      "image": "img/poi/inside/classroom.jpg",
+      "description": "One of two classrooms for school groups, workshops and meetings. They also serve as breakout rooms when the Library hosts conferences.",
       "cta": {
         "label": "For educators",
         "url": "https://www.trlibrary.com/tr/for-educators"
       },
-      "position": "-26.149 1.179 -75.536"
+      "position": "-26.149 1.179 -75.536",
+      "imageCaption": "Architectural rendering: Snøhetta / Plomp"
     },
     {
       "id": "south-classroom",
@@ -575,13 +578,14 @@
       "kind": "space",
       "level": 1,
       "title": "South Classroom",
-      "image": "",
-      "description": "One of two classrooms for school groups, workshops and meetings.",
+      "image": "img/poi/inside/classroom.jpg",
+      "description": "One of two classrooms for school groups, workshops and meetings. They also serve as breakout rooms when the Library hosts conferences.",
       "cta": {
         "label": "For educators",
         "url": "https://www.trlibrary.com/tr/for-educators"
       },
-      "position": "-26.554 1.179 -74.980"
+      "position": "-26.554 1.179 -74.980",
+      "imageCaption": "Architectural rendering: Snøhetta / Plomp"
     },
     {
       "id": "board-room",
@@ -589,8 +593,8 @@
       "kind": "space",
       "level": 2,
       "title": "Executive Board Room",
-      "image": "",
-      "description": "The upper-floor board room in the East Wing, available for meetings and private events.",
+      "image": "img/poi/inside/board-room.jpg",
+      "description": "The East Wing's upstairs board room looks out over the Badlands through a long curved window. It hosts board meetings, leadership retreats and private gatherings.",
       "cta": {
         "label": "Host an event",
         "url": "https://www.trlibrary.com/private-events"
@@ -604,7 +608,7 @@
       "level": 2,
       "title": "Upper Floor Reception",
       "image": "",
-      "description": "Arrival area at the top of the East Wing elevator and stairs.",
+      "description": "The arrival area at the top of the East Wing elevator and stairs, serving the Executive Board Room and upstairs meeting spaces.",
       "cta": null,
       "position": "-25.250 1.659 -76.744"
     }
