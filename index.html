@@ -100,6 +100,8 @@
     border-radius:2px; border:1px solid var(--line); background:rgba(255,255,255,.9);
     cursor:pointer; font-size:18px; line-height:1; color:var(--text); }
   .panel .pimg { width:100%; height:210px; object-fit:cover; background:#ece9e3; display:block; }
+  .panel .pcap { font-family:var(--font-ui); font-size:10.5px; color:#8a8f95; padding:5px 24px 0; }
+  .panel .pcap:empty { display:none; }
   .panel .pbody { padding:24px; overflow:auto; }
   .panel .ptitle { font-family:var(--font-display); font-weight:800; text-transform:uppercase;
     letter-spacing:.015em; font-size:27px; line-height:1.04; margin:0 0 12px; }
@@ -319,6 +321,7 @@
   <aside class="panel" id="panel" aria-hidden="true">
     <button class="close" id="panelClose" aria-label="Close">×</button>
     <img class="pimg" id="pImg" alt="" />
+    <div class="pcap" id="pCap"></div>
     <div class="pbody">
       <p class="pkick" id="pKick"></p>
       <h2 class="ptitle" id="pTitle"></h2>
@@ -531,6 +534,7 @@
     if (p.image){ pImg.src = p.image; pImg.style.display = 'block'; pImg.onerror = () => { pImg.style.display = 'none'; }; }
     else { pImg.removeAttribute('src'); pImg.style.display = 'none'; }
     pKick.textContent = p._kicker || '';
+    document.getElementById('pCap').textContent = (p.image && p.imageCaption) || '';
     pTitle.textContent = p.title || '';
     pDesc.textContent = p.description || '';
     if (p.cta && p.cta.url){ pCta.textContent = p.cta.label || 'Learn more'; pCta.href = p.cta.url; pCta.style.display = 'inline-block'; }
