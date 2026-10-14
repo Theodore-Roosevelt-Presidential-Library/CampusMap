@@ -6,6 +6,9 @@
  *   data-pois    URL of a custom POI JSON file to use instead of the default set
  *                (must be CORS-accessible). See README for the JSON shape and the
  *                postMessage API for injecting POIs without CORS.
+ *   data-stop    open the map inside the Library at an interior stop, e.g. "in-the-arena" or
+ *                "museum-store" (ids in interior.json). Overrides data-inside.
+ *   data-inside  open inside the Library: "1" (main floor) or "2" (East Wing upper floor).
  *   data-height  iframe height. A number (px, default 600), any CSS length ("80vh",
  *                "calc(100vh - 120px)"), "100%" (fills its container if the container has
  *                a height; otherwise falls back to filling the viewport), or "fill"
@@ -18,6 +21,8 @@
   var origin = new URL(s.src).origin;
   var view = s.getAttribute('data-view') || '';
   var pois = s.getAttribute('data-pois') || '';
+  var stop = s.getAttribute('data-stop') || '';
+  var inside = s.getAttribute('data-inside') || '';
   var height = s.getAttribute('data-height') || '600';
   var width = s.getAttribute('data-width') || '100%';
   if (/^\d+$/.test(width)) width += 'px';
@@ -25,6 +30,8 @@
   var params = new URLSearchParams();
   if (view) params.set('v', view);
   if (pois) params.set('pois', pois);
+  if (stop) params.set('stop', stop);
+  else if (inside) params.set('inside', inside === '2' ? '2' : '1');
   var qs = params.toString();
   var src = origin + '/' + (qs ? '?' + qs : '');
   var iframe = document.createElement('iframe');
