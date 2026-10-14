@@ -26,6 +26,8 @@ Live site: **https://campus.labs.trlibrary.com**
 
 ## Viewer features
 
+- Loading screen: a still of the opening view (`img/loading-wide.webp`, ~26 KB) shows immediately with the progress bar, then fades into the live model. The model is preloaded from the page head so the download starts before the viewer script runs.
+
 - Starts framed on the Library and boardwalk (camera locked above the horizon so the underside isn't visible)
 - Matte materials, white background so terrain blends into the page
 - Manual +/− zoom, POI show/hide toggle, and a full-screen button (lower right); plus scroll/drag/pinch and a touch-aware controls guide
@@ -37,7 +39,7 @@ Live site: **https://campus.labs.trlibrary.com**
 
 ## Inside the Library
 
-**Step inside** (top center) lifts the roof and shows the Library's public spaces. Private areas (offices, security, IT, mechanical, storage, back of house) are drawn as solid blocks, the same way the exhibit map on [trlibrary.com/visit/maps](https://www.trlibrary.com/visit/maps) treats them.
+**Outside | Inside** (top center): *Inside* lifts the roof and shows the Library's public spaces. Private areas (offices, security, IT, mechanical, storage, back of house) are drawn as solid blocks, the same way the exhibit map on [trlibrary.com/visit/maps](https://www.trlibrary.com/visit/maps) treats them.
 
 - **Floors:** *Main floor* (galleries 1–28, Narrative Galleries A–D, lobby, Exhibit & Event Gallery, store, Salt+Scoria, lockers, auditorium, East Wing lobby, classrooms) and *Upper floor* (East Wing: Executive Board Room and the upstairs reception).
 - **Stops:** numbered and lettered markers match the printed exhibit map. Each opens the side panel with a photo, a short description and a link to that gallery's section of the [exhibit guide](https://www.trlibrary.com/visit/exhibits/main). The content is in **`interior.json`**: edit text, images (`img/poi/inside/`) and links there.
